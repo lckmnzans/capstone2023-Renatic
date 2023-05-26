@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Renatic</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="logout">Logout</string>
+    <string name="name">Nama</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="conf_password">Konfirmasi Password</string>
+    <string name="dummy_name">Steven Ardi C</string>
+    <string name="dummy_mail">steve420@gmail.com</string>
+</resources>
