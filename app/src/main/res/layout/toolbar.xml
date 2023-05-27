@@ -35,6 +35,7 @@
             app:layout_constraintTop_toTopOf="@+id/iv_logo" />
         <ImageView
             android:id="@+id/iv_to_profile"
+            android:clickable="true"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_account_circle"

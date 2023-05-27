@@ -9,4 +9,36 @@
     <string name="conf_password">Konfirmasi Password</string>
     <string name="dummy_name">Steven Ardi C</string>
     <string name="dummy_mail">steve420@gmail.com</string>
+    <string name="noname">just ornamental</string>
+    <string name="form_retina">Form Data Retina</string>
+    <string name="form_patient">Form Data Pasien</string>
+    <string name="form_clinical">Form Data Klinis</string>
+    <string name="upload">Unggah</string>
+    <string name="submit">Submit</string>
+
+    <string name="age">Age</string>
+    <string name="ex_name">cth: Jokowi</string>
+    <string name="num">No. BPJS/JKN</string>
+    <string name="ex_num">cth: 000012345678</string>
+    <string name="dob">Tanggal Lahir</string>
+    <string name="ex_dob">cth: 20/01/2001</string>
+    <string name="sex">Jenis Kelamin</string>
+    <string name="ex_sex">cth: Laki-laki</string>
+    <string name="weight">Berat Badan</string>
+    <string name="ex_weight">cth: 65kg</string>
+
+    <string name="pregnancies">Pregnancies</string>
+    <string name="glucose">Glucose</string>
+    <string name="blood_pressure">BloodPressure</string>
+    <string name="skin_thickness">SkinThickness</string>
+    <string name="insulin">Insulin</string>
+    <string name="bmi">BMI</string>
+    <string name="diabet">DiabetesperDegree</string>
+    <string name="bla">...</string>
+
+    <string name="selected_item">dipilih</string>
+    <string-array name="sexes">
+        <item>Laki-laki</item>
+        <item>Perempuan</item>
+    </string-array>
 </resources>
