@@ -6,8 +6,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.renatic.app.data.Patients
+import com.renatic.app.data.PatientsAdapter
+import com.renatic.app.data.dummyText
 import com.renatic.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -45,9 +50,27 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        binding.view1.setOnClickListener {
-            val intent = Intent(this@MainActivity, DetailActivity::class.java)
-            startActivity(intent)
+        binding.rvPatients.layoutManager = LinearLayoutManager(this)
+        setPatientsData(dummyText)
+    }
+
+    private fun setPatientsData(patients: ArrayList<Patients>) {
+        val list = ArrayList<Patients>()
+        for (patient in patients) {
+            val patientData = Patients(patient.name, patient.dob, patient.sex)
+            list.add(patientData)
         }
+
+        val listPatients = PatientsAdapter(patients)
+        binding.rvPatients.adapter = listPatients
+
+        listPatients.setOnItemClickListener(object: PatientsAdapter.OnItemClickListener {
+            override fun onItemClicked(item: Patients) {
+                val patientDetail = Patients(item.name, item.dob, item.sex)
+                val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_DETAIL, patientDetail)
+                startActivity(intent)
+            }
+        })
     }
 }

@@ -22,4 +22,8 @@ class DetailActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    companion object {
+        const val EXTRA_DETAIL = "extra_detail"
+    }
 }
