@@ -9,6 +9,8 @@
     <string name="conf_password">Konfirmasi Password</string>
     <string name="dummy_name">Steven Ardi C</string>
     <string name="dummy_mail">steve420@gmail.com</string>
+    <string name="add_photo">Form Data Retina</string>
+    <string name="add_clinical">Form Data Klinis</string>
     <string name="noname">just ornamental</string>
     <string name="form_retina">Form Data Retina</string>
     <string name="form_patient">Form Data Pasien</string>

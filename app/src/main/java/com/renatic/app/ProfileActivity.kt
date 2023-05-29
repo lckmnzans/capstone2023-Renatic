@@ -18,7 +18,7 @@ class ProfileActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar2)
         setSupportActionBar(toolbar)
 
-        val btnBack: ImageView = findViewById(R.id.iv_back)
+        val btnBack = binding.toolbar2.ivBack
         btnBack.setOnClickListener {
             finish()
         }

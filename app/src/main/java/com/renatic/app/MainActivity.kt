@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     private fun setPatientsData(patients: ArrayList<Patients>) {
         val list = ArrayList<Patients>()
         for (patient in patients) {
-            val patientData = Patients(patient.name, patient.dob, patient.sex)
+            val patientData = Patients(patient.name, patient.dob, patient.sex, patient.num)
             list.add(patientData)
         }
 
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
         listPatients.setOnItemClickListener(object: PatientsAdapter.OnItemClickListener {
             override fun onItemClicked(item: Patients) {
-                val patientDetail = Patients(item.name, item.dob, item.sex)
+                val patientDetail = Patients(item.name, item.dob, item.sex, item.num)
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
                 intent.putExtra(DetailActivity.EXTRA_DETAIL, patientDetail)
                 startActivity(intent)

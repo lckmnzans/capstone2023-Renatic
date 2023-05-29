@@ -29,7 +29,7 @@ class PatientsAdapter(private val listPatients: ArrayList<Patients>): RecyclerVi
     override fun getItemCount(): Int = listPatients.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val (name, dob, sex) = listPatients[position]
+        val (name, dob, sex, _) = listPatients[position]
         holder.tvName.text = name
         holder.tvDob.text = dob
         holder.tvSex.text = sex
