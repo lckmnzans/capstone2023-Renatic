@@ -142,7 +142,7 @@
                         android:id="@+id/btn_to_form_retina"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/add_photo"
+                        android:text="@string/take_pict"
                         android:textSize="12sp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"

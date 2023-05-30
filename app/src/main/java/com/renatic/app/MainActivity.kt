@@ -5,31 +5,24 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.renatic.app.data.Patients
 import com.renatic.app.data.PatientsAdapter
 import com.renatic.app.data.dummyText
 import com.renatic.app.databinding.ActivityMainBinding
+import com.renatic.app.viewManager.ToolbarManager
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var toolbar: ToolbarManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        val toProfile: ImageView = findViewById(R.id.iv_to_profile)
-        toProfile.setOnClickListener {
-            val intent = Intent(this@MainActivity, ProfileActivity::class.java)
-            startActivity(intent)
-        }
+        toolbar = ToolbarManager(this)
+        toolbar.setupToolbar()
 
         binding.fabAdd.setOnClickListener {
             val intent = Intent(this@MainActivity, FormPatientActivity::class.java)
@@ -42,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         binding.svMain.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.svMain.clearFocus()
+                // Operasi querying ke server
                 return true
             }
 
@@ -49,6 +43,13 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            // Lakukan operasi untuk memperbarui data RecyclerView di sini
+
+            // Setelah selesai, beritahu SwipeRefreshLayout bahwa pembaruan selesai
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
 
         binding.rvPatients.layoutManager = LinearLayoutManager(this)
         setPatientsData(dummyText)

@@ -6,22 +6,19 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import com.renatic.app.databinding.ActivityProfileBinding
+import com.renatic.app.viewManager.Toolbar2Manager
 import kotlin.system.exitProcess
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+    private lateinit var toolbar: Toolbar2Manager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar2)
-        setSupportActionBar(toolbar)
-
-        val btnBack = binding.toolbar2.ivBack
-        btnBack.setOnClickListener {
-            finish()
-        }
+        toolbar = Toolbar2Manager(this)
+        toolbar.setupToolbar()
 
         binding.btnLogout.setOnClickListener {
             finishAffinity()
