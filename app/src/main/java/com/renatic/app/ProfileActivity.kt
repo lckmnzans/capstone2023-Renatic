@@ -1,12 +1,11 @@
 package com.renatic.app
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
-import androidx.appcompat.widget.Toolbar
 import com.renatic.app.databinding.ActivityProfileBinding
-import com.renatic.app.viewManager.Toolbar2Manager
+import com.renatic.app.manager.Toolbar2Manager
 import kotlin.system.exitProcess
 
 class ProfileActivity : AppCompatActivity() {
@@ -21,8 +20,9 @@ class ProfileActivity : AppCompatActivity() {
         toolbar.setupToolbar()
 
         binding.btnLogout.setOnClickListener {
+            getSharedPreferences("LoginSession", Context.MODE_PRIVATE).edit().clear().apply()
+            startActivity(Intent(this, LoginActivity::class.java))
             finishAffinity()
-            exitProcess(0)
         }
     }
 }

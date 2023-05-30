@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import com.renatic.app.data.Patients
 import com.renatic.app.databinding.ActivityDetailBinding
-import com.renatic.app.viewManager.Toolbar2Manager
+import com.renatic.app.manager.Toolbar2Manager
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding

@@ -1,10 +1,8 @@
-package com.renatic.app.viewManager
+package com.renatic.app.manager
 
-import android.content.Intent
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.renatic.app.ProfileActivity
 import com.renatic.app.R
 
 class Toolbar2Manager(private val activity: AppCompatActivity) {

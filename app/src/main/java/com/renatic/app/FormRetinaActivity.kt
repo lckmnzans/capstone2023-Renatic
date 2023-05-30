@@ -5,9 +5,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.Toolbar
 import com.renatic.app.databinding.ActivityFormRetinaBinding
-import com.renatic.app.viewManager.Toolbar2Manager
+import com.renatic.app.manager.Toolbar2Manager
 import java.io.File
 
 class FormRetinaActivity : AppCompatActivity() {

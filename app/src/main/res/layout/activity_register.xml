@@ -30,33 +30,47 @@
             android:textAllCaps="true"
             android:textSize="24sp"/>
         <EditText
+            android:id="@+id/edt_nama"
             android:layout_width="300dp"
             android:layout_height="45dp"
             android:layout_marginBottom="40dp"
+            android:paddingStart="20dp"
             android:textSize="16sp"
-            android:hint="@string/name"/>
+            android:hint="@string/name"
+            android:background="@drawable/custom_frame"/>
         <EditText
+            android:id="@+id/edt_email"
             android:layout_width="300dp"
             android:layout_height="45dp"
             android:layout_marginBottom="40dp"
+            android:paddingStart="20dp"
             android:textSize="16sp"
-            android:hint="@string/email"/>
+            android:hint="@string/email"
+            android:background="@drawable/custom_frame"/>
         <EditText
+            android:id="@+id/edt_password1"
             android:layout_width="300dp"
             android:layout_height="45dp"
             android:layout_marginBottom="40dp"
+            android:paddingStart="20dp"
             android:textSize="16sp"
-            android:hint="@string/password"/>
+            android:hint="@string/password"
+            android:background="@drawable/custom_frame"/>
         <EditText
+            android:id="@+id/edt_password2"
             android:layout_width="300dp"
             android:layout_height="45dp"
             android:layout_marginBottom="40dp"
+            android:paddingStart="20dp"
             android:textSize="16sp"
-            android:hint="@string/conf_password"/>
+            android:hint="@string/conf_password"
+            android:background="@drawable/custom_frame"/>
         <Button
+            android:id="@+id/btn_register"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:text="@string/register"/>
+            android:text="@string/register"
+            android:background="@drawable/custom_round_button"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

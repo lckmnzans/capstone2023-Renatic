@@ -1,4 +1,4 @@
-package com.renatic.app.viewManager
+package com.renatic.app.manager
 
 import android.content.Intent
 import android.widget.ImageView

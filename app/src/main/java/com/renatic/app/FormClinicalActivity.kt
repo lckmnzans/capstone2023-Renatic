@@ -2,9 +2,8 @@ package com.renatic.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import com.renatic.app.databinding.ActivityFormClinicalBinding
-import com.renatic.app.viewManager.Toolbar2Manager
+import com.renatic.app.manager.Toolbar2Manager
 
 class FormClinicalActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFormClinicalBinding

@@ -11,7 +11,7 @@ import com.renatic.app.data.Patients
 import com.renatic.app.data.PatientsAdapter
 import com.renatic.app.data.dummyText
 import com.renatic.app.databinding.ActivityMainBinding
-import com.renatic.app.viewManager.ToolbarManager
+import com.renatic.app.manager.ToolbarManager
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
