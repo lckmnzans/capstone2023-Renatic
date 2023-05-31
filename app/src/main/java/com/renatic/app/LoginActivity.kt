@@ -39,14 +39,10 @@ class LoginActivity : AppCompatActivity() {
                     binding.edtPassword.error = "Password harap diisi"
                 }
             }
-            /*
-            * Implementasi jika input field email dan atau password kosong, maka tidak akan diproses
-            * */
         }
 
         binding.btnRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
-            //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
     }

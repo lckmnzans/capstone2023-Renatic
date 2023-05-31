@@ -70,7 +70,7 @@
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:text="@string/register"
-            android:background="@drawable/custom_round_button"/>
+            android:background="@drawable/custom_frame"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
