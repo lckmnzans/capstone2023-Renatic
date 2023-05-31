@@ -36,7 +36,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun registerUser(name: String, email: String, password1: String, password2: String) {
         val request = RegisterRequest(name, email, password1, password2)
-        val client = ApiConfig.getApiService().register(request)
+        val client = ApiConfig.getApiService("").register(request)
         client.enqueue(object: Callback<RegisterResponse> {
             override fun onResponse(
                 call: Call<RegisterResponse>,
@@ -47,7 +47,7 @@ class RegisterActivity : AppCompatActivity() {
                     if (responseBody != null && !responseBody.error.toBooleanStrict()) {
                         Log.e(TAG, "onResponse : Register sukses")
                     } else {
-                        Log.e(TAG, "onResponse: Register gagal")
+                        Log.e(TAG, "onResponse : Register gagal")
                     }
                 } else {
                     Log.e(TAG, "onResponse: Register gagal")

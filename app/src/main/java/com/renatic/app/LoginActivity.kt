@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.databinding.ActivityLoginBinding
@@ -25,6 +27,23 @@ class LoginActivity : AppCompatActivity() {
         if (isLoggedIn) {
             toMain()
         }
+
+        binding.edtPassword.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(t: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //
+            }
+
+            override fun onTextChanged(t: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val password = binding.edtPassword.text
+                if (password.length < 8) {
+                    binding.edtPassword.error = "Password harus minimal 8 karakter"
+                }
+            }
+
+            override fun afterTextChanged(t: Editable?) {
+                //
+            }
+        } )
 
         binding.btnLogin.setOnClickListener {
             val email = binding.edtEmail.text
@@ -49,14 +68,16 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginUser(email: String, password: String) {
         val request = LoginRequest(email, password)
-        val client = ApiConfig.getApiService().login(request)
+        val client = ApiConfig.getApiService("").login(request)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null && !responseBody.error.toBooleanStrict()) {
+                        val idVal = responseBody.data?.id.toString()
+                        val tokenVal = responseBody.data?.token.toString()
                         val sessionManager = SessionManager(applicationContext)
-                        sessionManager.saveSession(responseBody.data?.token.toString())
+                        sessionManager.saveSession(idVal, tokenVal)
                         Log.e(TAG, "onResponse : Login berhasil")
 
                         toMain()

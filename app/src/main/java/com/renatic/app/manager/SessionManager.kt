@@ -5,9 +5,10 @@ import android.content.Context
 class SessionManager(private val context: Context) {
     private val sharedPreferences = context.getSharedPreferences("LoginSession", Context.MODE_PRIVATE)
 
-    fun saveSession(token: String) {
+    fun saveSession(id: String, token: String) {
         val editor = sharedPreferences.edit()
         editor.putBoolean("isLoggedIn", true)
+        editor.putString("id", id)
         editor.putString("token", token)
         editor.apply()
     }

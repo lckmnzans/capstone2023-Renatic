@@ -1,9 +1,6 @@
 package com.renatic.app.api
 
-import com.renatic.app.response.LoginRequest
-import com.renatic.app.response.LoginResponse
-import com.renatic.app.response.RegisterRequest
-import com.renatic.app.response.RegisterResponse
+import com.renatic.app.response.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -17,4 +14,9 @@ interface ApiService {
     fun register(
         @Body registerRequest: RegisterRequest
     ): Call<RegisterResponse>
+
+    @GET("profile/{id}")
+    fun getProfile(
+        @Path("id") id: String
+    ): Call<ProfileResponse>
 }
