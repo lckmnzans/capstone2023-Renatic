@@ -7,6 +7,7 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.renatic.app.R
+import com.renatic.app.databinding.ItemViewBinding
 
 class PatientsAdapter(private val listPatients: ArrayList<Patients>): RecyclerView.Adapter<PatientsAdapter.ViewHolder>() {
     private lateinit var onItemClickListener: OnItemClickListener
@@ -15,15 +16,15 @@ class PatientsAdapter(private val listPatients: ArrayList<Patients>): RecyclerVi
         fun onItemClicked(item: Patients)
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val tvName: TextView = itemView.findViewById(R.id.tv_name)
-        val tvDob: TextView = itemView.findViewById(R.id.tv_dob)
-        val tvSex: TextView = itemView.findViewById(R.id.tv_sex)
+    class ViewHolder(private val binding: ItemViewBinding): RecyclerView.ViewHolder(binding.root) {
+        val tvName = binding.tvName
+        val tvDob = binding.tvDob
+        val tvSex = binding.tvSex
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_view, parent, false)
-        return ViewHolder(view)
+        val binding: ItemViewBinding = ItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int = listPatients.size
