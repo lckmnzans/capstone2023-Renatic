@@ -12,4 +12,11 @@ class SessionManager(private val context: Context) {
         editor.putString("token", token)
         editor.apply()
     }
+
+    fun saveProfile(name: String, email: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("name", name)
+        editor.putString("email", email)
+        editor.apply()
+    }
 }
