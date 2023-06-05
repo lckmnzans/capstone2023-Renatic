@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.renatic.app.api.ApiConfig
-import com.renatic.app.databinding.ActivityLoginBinding
 import com.renatic.app.databinding.ActivityRegisterBinding
 import com.renatic.app.response.RegisterRequest
 import com.renatic.app.response.RegisterResponse
@@ -26,7 +25,7 @@ class RegisterActivity : AppCompatActivity() {
             val password1 = binding.edtPassword1.text.toString()
             val password2 = binding.edtPassword2.text.toString()
 
-            if (name.isNullOrEmpty() || email.isNullOrEmpty() || password1.isNullOrEmpty() || password2.isNullOrEmpty()) {
+            if (name.isEmpty() || email.isEmpty() || password1.isEmpty() || password2.isEmpty()) {
                 Toast.makeText(this, "Harap isi semuanya dengan benar", Toast.LENGTH_SHORT).show()
             } else {
                 registerUser(name, email, password1, password2)
