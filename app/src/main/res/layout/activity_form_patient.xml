@@ -95,7 +95,7 @@
             android:text="@string/dob"
             android:textStyle="bold"
             android:textSize="14sp"/>
-        <EditText
+        <com.renatic.app.customView.EditDate
             android:id="@+id/et_dob"
             android:inputType="number"
             android:layout_width="match_parent"
