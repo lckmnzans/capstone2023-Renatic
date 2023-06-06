@@ -19,4 +19,7 @@ interface ApiService {
     fun getProfile(
         @Path("id") id: String
     ): Call<ProfileResponse>
+
+    @GET("patient")
+    suspend fun getAllPatient(): PatientResponse
 }

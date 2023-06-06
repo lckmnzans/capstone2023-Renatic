@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.data.Patients
 import com.renatic.app.data.PatientsAdapter
-import com.renatic.app.data.dummyText
 import com.renatic.app.databinding.ActivityMainBinding
 import com.renatic.app.manager.SessionManager
 import com.renatic.app.manager.ToolbarManager
+import com.renatic.app.response.PatientItem
 import com.renatic.app.response.ProfileResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +23,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.sign
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -67,22 +68,22 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.rvPatients.layoutManager = LinearLayoutManager(this)
-        setPatientsData(dummyText)
+        getPatients()
     }
 
-    private fun setPatientsData(patients: ArrayList<Patients>) {
+    private fun setPatientsData(patients: List<PatientItem>) {
         val list = ArrayList<Patients>()
         for (patient in patients) {
-            val patientData = Patients(patient.name, patient.dob, patient.sex, patient.num)
+            val patientData = Patients(patient.namePatient, patient.umur, patient.kelamin)
             list.add(patientData)
         }
 
-        val listPatients = PatientsAdapter(patients)
+        val listPatients = PatientsAdapter(list)
         binding.rvPatients.adapter = listPatients
 
         listPatients.setOnItemClickListener(object: PatientsAdapter.OnItemClickListener {
             override fun onItemClicked(item: Patients) {
-                val patientDetail = Patients(item.name, item.dob, item.sex, item.num)
+                val patientDetail = Patients(item.name, item.age, item.sex)
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
                 intent.putExtra(DetailActivity.EXTRA_DETAIL, patientDetail)
                 startActivity(intent)
@@ -91,7 +92,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getUserProfile(id: String) {
-        val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "token")
+        val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
         lifecycleScope.launch(Dispatchers.Default) {
             val client = ApiConfig.getApiService(token.toString()).getProfile(id)
             client.enqueue(object: Callback<ProfileResponse> {
@@ -105,12 +106,12 @@ class MainActivity : AppCompatActivity() {
                             val name = responseBody.data[0]!!.nameUser
                             val email = responseBody.data[0]!!.email
                             saveData(name, email)
-                            Log.e(LoginActivity.TAG, "onResponse : Profile sukses didapatkan")
+                            Log.e(TAG, "onResponse : Profile sukses didapatkan")
                         } else {
-                            Log.e(LoginActivity.TAG, "onResponse : Profile gagal didapatkan")
+                            Log.e(TAG, "onResponse : Profile gagal didapatkan")
                         }
                     } else {
-                        Log.e(LoginActivity.TAG, "onResponse : Profile gagal didapatkan karena suatu hal")
+                        Log.e(TAG, "onResponse : Profile gagal didapatkan karena suatu hal")
                     }
                 }
 
@@ -121,8 +122,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun getPatients() {
+        val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
+        lifecycleScope.launch(Dispatchers.Default) {
+            val response = ApiConfig.getApiService(token.toString()).getAllPatient()
+            val listOfPatients = response.data
+            if (listOfPatients != null) {
+                withContext(Dispatchers.Main) {
+                    setPatientsData(listOfPatients)
+                }
+            }
+        }
+    }
     private fun saveData(name: String, email: String) {
         val sessionManager = SessionManager(applicationContext)
         sessionManager.saveProfile(name, email)
+    }
+
+    companion object {
+        const val TAG = "MainActivity"
     }
 }

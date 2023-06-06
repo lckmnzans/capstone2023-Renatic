@@ -36,8 +36,8 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setStoryDetail(detail: Patients) {
         binding.tvNameDetail.text = ": ".plus(detail.name)
-        binding.tvNumDetail.text = ": ".plus(detail.num ?: "-")
-        binding.tvDobDetail.text = ": ".plus(detail.dob)
+        binding.tvAgeDetail.text = ": ".plus(detail.age ?: "-")
+        binding.tvSexDetail.text = ": ".plus(detail.sex)
     }
 
     private fun getParceableData(): Patients? {

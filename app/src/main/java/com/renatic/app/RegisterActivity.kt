@@ -1,19 +1,28 @@
 package com.renatic.app
 
+import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.databinding.ActivityRegisterBinding
 import com.renatic.app.response.RegisterRequest
 import com.renatic.app.response.RegisterResponse
+import com.renatic.app.viewModel.RegisterViewModel
+import com.renatic.app.viewModel.ViewModelFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
+    private val viewModel: RegisterViewModel by viewModels {
+        ViewModelFactory(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -28,11 +37,15 @@ class RegisterActivity : AppCompatActivity() {
             if (name.isEmpty() || email.isEmpty() || password1.isEmpty() || password2.isEmpty()) {
                 Toast.makeText(this, "Harap isi semuanya dengan benar", Toast.LENGTH_SHORT).show()
             } else {
-                registerUser(name, email, password1, password2)
+                viewModel.isLoading.observe(this) { isLoading ->
+                    showLoading(isLoading)
+                }
+                viewModel.registerUser(name, email, password1, password2)
             }
         }
     }
 
+    /* DEPRECATED
     private fun registerUser(name: String, email: String, password1: String, password2: String) {
         val request = RegisterRequest(name, email, password1, password2)
         val client = ApiConfig.getApiService("").register(request)
@@ -57,9 +70,15 @@ class RegisterActivity : AppCompatActivity() {
                 Log.e(TAG, "onFailure : ${t.message}")
             }
         })
-    }
+    }*/
 
-    companion object {
-        const val TAG = "RegisterActivity"
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            ObjectAnimator.ofFloat(binding.registerLayout, View.ALPHA, 0.5f).start()
+            binding.loadRegister.visibility = View.VISIBLE
+        } else {
+            ObjectAnimator.ofFloat(binding.registerLayout, View.ALPHA, 1f).start()
+            binding.loadRegister.visibility = View.GONE
+        }
     }
 }

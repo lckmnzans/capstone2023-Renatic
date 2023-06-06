@@ -1,12 +1,8 @@
 package com.renatic.app.data
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.renatic.app.R
 import com.renatic.app.databinding.ItemViewBinding
 
 class PatientsAdapter(private val listPatients: ArrayList<Patients>): RecyclerView.Adapter<PatientsAdapter.ViewHolder>() {
@@ -18,8 +14,8 @@ class PatientsAdapter(private val listPatients: ArrayList<Patients>): RecyclerVi
 
     class ViewHolder(private val binding: ItemViewBinding): RecyclerView.ViewHolder(binding.root) {
         val tvName = binding.tvName
-        val tvDob = binding.tvDob
         val tvSex = binding.tvSex
+        val tvAge = binding.tvAge
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,10 +26,14 @@ class PatientsAdapter(private val listPatients: ArrayList<Patients>): RecyclerVi
     override fun getItemCount(): Int = listPatients.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val (name, dob, sex, _) = listPatients[position]
+        val (name, age, sex) = listPatients[position]
         holder.tvName.text = name
-        holder.tvDob.text = dob
-        holder.tvSex.text = sex
+        if (sex == 1) {
+            holder.tvSex.text = "Laki-laki"
+        } else {
+            holder.tvSex.text = "Perempuan"
+        }
+        holder.tvAge.text = age.toString()
 
         holder.itemView.setOnClickListener {
             onItemClickListener.onItemClicked(listPatients[holder.adapterPosition])

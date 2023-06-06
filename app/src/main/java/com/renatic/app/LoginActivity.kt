@@ -1,5 +1,6 @@
 package com.renatic.app
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,17 +8,26 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.databinding.ActivityLoginBinding
 import com.renatic.app.manager.SessionManager
 import com.renatic.app.response.LoginRequest
 import com.renatic.app.response.LoginResponse
+import com.renatic.app.viewModel.LoginViewModel
+import com.renatic.app.viewModel.ViewModelFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private val viewModel: LoginViewModel by viewModels {
+        ViewModelFactory(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -49,7 +59,13 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.edtEmail.text
             val password = binding.edtPassword.text
             if (!email.isNullOrEmpty() && !password.isNullOrEmpty()) {
-                loginUser(email.toString(), password.toString())
+                viewModel.loginUser(email.toString(), password.toString(), this)
+                viewModel.isLoading.observe(this) { isLoading ->
+                    showLoading(isLoading)
+                }
+                viewModel.isSuccess.observe(this) { isSuccess ->
+                    if (isSuccess) toMain()
+                }
             } else {
                 if (email.isNullOrEmpty()) {
                     binding.edtEmail.error = "Email harap diisi"
@@ -66,6 +82,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /* DEPRECATED
     private fun loginUser(email: String, password: String) {
         val request = LoginRequest(email, password)
         val client = ApiConfig.getApiService("").login(request)
@@ -79,7 +96,6 @@ class LoginActivity : AppCompatActivity() {
                         val sessionManager = SessionManager(applicationContext)
                         sessionManager.saveSession(idVal, tokenVal)
                         Log.e(TAG, "onResponse : Login berhasil")
-
                         toMain()
                     } else {
                         Log.e(TAG, "onResponse : Login gagal")
@@ -93,15 +109,21 @@ class LoginActivity : AppCompatActivity() {
                 Log.e(TAG, "onFailure : ${t.message}")
             }
         })
+    }*/
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            ObjectAnimator.ofFloat(binding.loginLayout, View.ALPHA, 0.5f).start()
+            binding.loadLogin.visibility = View.VISIBLE
+        } else {
+            ObjectAnimator.ofFloat(binding.loginLayout, View.ALPHA, 1f).start()
+            binding.loadLogin.visibility = View.GONE
+        }
     }
 
     private fun toMain() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
-    }
-
-    companion object {
-        const val TAG = "LoginActivity"
     }
 }

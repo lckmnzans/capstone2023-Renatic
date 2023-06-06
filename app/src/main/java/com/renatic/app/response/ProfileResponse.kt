@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ProfileResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataItem?>,
+	val data: List<ProfileItem?>,
 
 	@field:SerializedName("error")
 	val error: String,
@@ -14,7 +14,7 @@ data class ProfileResponse(
 	val message: String
 )
 
-data class DataItem(
+data class ProfileItem(
 
 	@field:SerializedName("idUser")
 	val idUser: Int,
