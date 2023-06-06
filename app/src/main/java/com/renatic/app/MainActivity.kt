@@ -16,14 +16,9 @@ import com.renatic.app.databinding.ActivityMainBinding
 import com.renatic.app.manager.SessionManager
 import com.renatic.app.manager.ToolbarManager
 import com.renatic.app.response.PatientItem
-import com.renatic.app.response.ProfileResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import kotlin.math.sign
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -68,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.rvPatients.layoutManager = LinearLayoutManager(this)
-        getPatients()
+        getListOfPatient()
     }
 
     private fun setPatientsData(patients: List<PatientItem>) {
@@ -94,35 +89,18 @@ class MainActivity : AppCompatActivity() {
     private fun getUserProfile(id: String) {
         val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
         lifecycleScope.launch(Dispatchers.Default) {
-            val client = ApiConfig.getApiService(token.toString()).getProfile(id)
-            client.enqueue(object: Callback<ProfileResponse> {
-                override fun onResponse(
-                    call: Call<ProfileResponse>,
-                    response: Response<ProfileResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()!!
-                        if (responseBody.data.isNotEmpty() && !responseBody.error.toBooleanStrict()) {
-                            val name = responseBody.data[0]!!.nameUser
-                            val email = responseBody.data[0]!!.email
-                            saveData(name, email)
-                            Log.e(TAG, "onResponse : Profile sukses didapatkan")
-                        } else {
-                            Log.e(TAG, "onResponse : Profile gagal didapatkan")
-                        }
-                    } else {
-                        Log.e(TAG, "onResponse : Profile gagal didapatkan karena suatu hal")
-                    }
-                }
-
-                override fun onFailure(call: Call<ProfileResponse>, t: Throwable) {
-                    TODO("Not yet implemented")
-                }
-            })
+            val response = ApiConfig.getApiService(token.toString()).getProfile(id)
+            if (!response.error.toBooleanStrict()) {
+                val userProfile = response.data
+                saveData(userProfile[0]!!.nameUser, userProfile[0]!!.email)
+                Log.e(TAG, "onResponse : Profile sukses didapatkan")
+            } else {
+                Log.e(TAG, "onResponse : Profile gagal didapatkan")
+            }
         }
     }
 
-    private fun getPatients() {
+    private fun getListOfPatient() {
         val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
         lifecycleScope.launch(Dispatchers.Default) {
             val response = ApiConfig.getApiService(token.toString()).getAllPatient()

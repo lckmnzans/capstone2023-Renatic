@@ -3,19 +3,12 @@ package com.renatic.app
 import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.renatic.app.api.ApiConfig
 import com.renatic.app.databinding.ActivityRegisterBinding
-import com.renatic.app.response.RegisterRequest
-import com.renatic.app.response.RegisterResponse
 import com.renatic.app.viewModel.RegisterViewModel
 import com.renatic.app.viewModel.ViewModelFactory
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding

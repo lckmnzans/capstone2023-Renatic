@@ -7,20 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
-import com.renatic.app.api.ApiConfig
 import com.renatic.app.databinding.ActivityLoginBinding
-import com.renatic.app.manager.SessionManager
-import com.renatic.app.response.LoginRequest
-import com.renatic.app.response.LoginResponse
 import com.renatic.app.viewModel.LoginViewModel
 import com.renatic.app.viewModel.ViewModelFactory
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding

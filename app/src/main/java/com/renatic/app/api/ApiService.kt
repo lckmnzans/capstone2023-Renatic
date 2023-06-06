@@ -16,9 +16,9 @@ interface ApiService {
     ): Call<RegisterResponse>
 
     @GET("profile/{id}")
-    fun getProfile(
+    suspend fun getProfile(
         @Path("id") id: String
-    ): Call<ProfileResponse>
+    ): ProfileResponse
 
     @GET("patient")
     suspend fun getAllPatient(): PatientResponse

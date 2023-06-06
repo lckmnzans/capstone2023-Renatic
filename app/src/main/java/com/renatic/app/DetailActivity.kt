@@ -36,16 +36,16 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setStoryDetail(detail: Patients) {
         binding.tvNameDetail.text = ": ".plus(detail.name)
-        binding.tvAgeDetail.text = ": ".plus(detail.age ?: "-")
+        binding.tvAgeDetail.text = ": ".plus(detail.age)
         binding.tvSexDetail.text = ": ".plus(detail.sex)
     }
 
+    @Suppress("DEPRECATION")
     private fun getParceableData(): Patients? {
-        if (Build.VERSION.SDK_INT >= 33) {
-            return intent.getParcelableExtra(EXTRA_DETAIL, Patients::class.java)
+        return if (Build.VERSION.SDK_INT >= 33) {
+            intent.getParcelableExtra(EXTRA_DETAIL, Patients::class.java)
         } else {
-            @Suppress("DEPRECATED")
-            return intent.getParcelableExtra(EXTRA_DETAIL)
+            intent.getParcelableExtra(EXTRA_DETAIL)
         }
     }
 

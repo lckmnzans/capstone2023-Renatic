@@ -4,14 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.renatic.app.api.ApiConfig
 import com.renatic.app.databinding.ActivityProfileBinding
 import com.renatic.app.manager.Toolbar2Manager
-import com.renatic.app.response.ProfileResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
