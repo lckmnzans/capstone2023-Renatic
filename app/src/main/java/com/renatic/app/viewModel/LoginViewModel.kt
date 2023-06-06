@@ -38,10 +38,10 @@ class LoginViewModel(context: Context): ViewModel() {
                         Log.e(TAG, "onResponse : Login berhasil")
                         _isSuccess.value = true
                     } else {
-                        Log.e(TAG, "onResponse : Login gagal")
+                        Log.d(TAG, "onResponse : Login gagal")
                     }
                 } else {
-                    Log.e(TAG, "onResponse : Login gagal")
+                    Log.d(TAG, "onResponse : Login gagal")
                 }
             }
 

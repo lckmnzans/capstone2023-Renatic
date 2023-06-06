@@ -75,6 +75,7 @@
             android:textSize="14sp"/>
         <EditText
             android:id="@+id/et_num"
+            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -96,6 +97,7 @@
             android:textSize="14sp"/>
         <EditText
             android:id="@+id/et_dob"
+            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"

@@ -16,9 +16,14 @@ import com.renatic.app.databinding.ActivityMainBinding
 import com.renatic.app.manager.SessionManager
 import com.renatic.app.manager.ToolbarManager
 import com.renatic.app.response.PatientItem
+import com.renatic.app.response.PatientRequest
+import com.renatic.app.response.PatientResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -42,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         binding.svMain.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.svMain.clearFocus()
-                // Operasi querying ke server
+                searchPatient(query.toString())
                 return true
             }
 
@@ -112,6 +117,36 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun searchPatient(bpjs: String) {
+        val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token","")
+        val request = PatientRequest(bpjs)
+        val call = ApiConfig.getApiService(token.toString()).getPatient(request)
+        call.enqueue(object: Callback<PatientResponse>{
+            override fun onResponse(
+                call: Call<PatientResponse>,
+                response: Response<PatientResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null && !responseBody.error.toBooleanStrict()) {
+                        val patientsData = responseBody.data!!
+                        setPatientsData(patientsData)
+                        Log.d(TAG, "onResponse: Pasien berhasil ditemukan")
+                    } else {
+                        Log.d(TAG, "onResponse: Pasien tidak ditemukan")
+                    }
+                } else {
+                    Log.d(TAG, "onResponse: Pasien tidak ditemukan")
+                }
+            }
+
+            override fun onFailure(call: Call<PatientResponse>, t: Throwable) {
+                Log.e(TAG, "onFailure: Pasien tidak ditemukan")
+            }
+        })
+    }
+
     private fun saveData(name: String, email: String) {
         val sessionManager = SessionManager(applicationContext)
         sessionManager.saveProfile(name, email)

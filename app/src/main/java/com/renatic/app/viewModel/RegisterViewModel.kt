@@ -30,12 +30,12 @@ class RegisterViewModel(context: Context): ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null && !responseBody.error.toBooleanStrict()) {
-                        Log.e(TAG, "onResponse : Register sukses")
+                        Log.d(TAG, "onResponse : Register sukses")
                     } else {
-                        Log.e(TAG, "onResponse : Register gagal")
+                        Log.d(TAG, "onResponse : Register gagal")
                     }
                 } else {
-                    Log.e(TAG, "onResponse: Register gagal")
+                    Log.d(TAG, "onResponse: Register gagal")
                 }
             }
 

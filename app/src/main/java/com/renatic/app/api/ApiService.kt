@@ -22,4 +22,9 @@ interface ApiService {
 
     @GET("patient")
     suspend fun getAllPatient(): PatientResponse
+
+    @POST("search")
+    fun getPatient(
+        @Body patientRequest: PatientRequest
+    ): Call<PatientResponse>
 }
