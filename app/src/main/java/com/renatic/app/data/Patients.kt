@@ -9,3 +9,11 @@ data class Patients(
     val age: Int,
     val sex: Int
 ): Parcelable
+
+data class PatientsInfo(
+    val name: String,
+    val num: String,
+    val dob: String,
+    val sex: String,
+    val weight: String
+)

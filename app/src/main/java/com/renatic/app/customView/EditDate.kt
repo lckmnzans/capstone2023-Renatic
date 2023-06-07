@@ -22,7 +22,6 @@ class EditDate: AppCompatEditText {
         init()
     }
 
-
     private val dateFormatter: DateTimeFormatter =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DateTimeFormatter.ofPattern("dd/MM/yyyy")
