@@ -10,10 +10,10 @@ data class Patients(
     val sex: Int
 ): Parcelable
 
-data class PatientsInfo(
+data class PatientsData(
     val name: String,
-    val num: String,
-    val dob: String,
-    val sex: String,
-    val weight: String
+    val bpjs: String,
+    val tanggalLahir: String,
+    val jkelamin: String,
+    val beratbadan: String
 )

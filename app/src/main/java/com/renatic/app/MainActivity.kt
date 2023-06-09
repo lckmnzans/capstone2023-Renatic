@@ -56,10 +56,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            binding.swipeRefreshLayout.isRefreshing = false
-        }
-
         val id = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("id", "").toString()
         getUserProfile(id)
 
@@ -115,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun searchPatient(bpjs: String) {
+    private fun searchPatient(bpjs: String) { //API BELUM SELESAI
         val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token","")
         val request = PatientRequest(bpjs)
         val call = ApiConfig.getApiService(token.toString()).getPatient(request)

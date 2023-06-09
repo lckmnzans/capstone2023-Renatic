@@ -1,5 +1,6 @@
 package com.renatic.app.api
 
+import com.renatic.app.data.PatientsData
 import com.renatic.app.response.*
 import retrofit2.Call
 import retrofit2.http.*
@@ -27,4 +28,9 @@ interface ApiService {
     fun getPatient(
         @Body patientRequest: PatientRequest
     ): Call<PatientResponse>
+
+    @POST("addpatient")
+    fun addPatient(
+        @Body patientRequest: PatientsData
+    ): Call<RegisterResponse>
 }

@@ -15,7 +15,7 @@ class PatientsAdapter(private val listPatients: ArrayList<Patients>): RecyclerVi
     class ViewHolder(private val binding: ItemViewBinding): RecyclerView.ViewHolder(binding.root) {
         val tvName = binding.tvName
         val tvSex = binding.tvSex
-        val tvAge = binding.tvAge
+        val tvDob = binding.tvDob
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,14 +26,14 @@ class PatientsAdapter(private val listPatients: ArrayList<Patients>): RecyclerVi
     override fun getItemCount(): Int = listPatients.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val (name, age, sex) = listPatients[position]
+        val (name, dob, sex) = listPatients[position]
         holder.tvName.text = name
         if (sex == 1) {
             holder.tvSex.text = "Laki-laki"
         } else {
             holder.tvSex.text = "Perempuan"
         }
-        holder.tvAge.text = age.toString()
+        holder.tvDob.text = dob.toString()
 
         holder.itemView.setOnClickListener {
             onItemClickListener.onItemClicked(listPatients[holder.adapterPosition])

@@ -24,7 +24,7 @@
     <string name="num">No. BPJS/JKN</string>
     <string name="ex_num">cth: 000012345678</string>
     <string name="dob">Tanggal Lahir</string>
-    <string name="ex_dob">cth: 20/01/2001</string>
+    <string name="ex_dob">cth: 2001-01-01</string>
     <string name="sex">Jenis Kelamin</string>
     <string name="ex_sex">cth: Laki-laki</string>
     <string name="weight">Berat Badan</string>
