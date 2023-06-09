@@ -5,11 +5,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.renatic.app.LoginActivity
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.manager.SessionManager
 import com.renatic.app.response.LoginRequest
 import com.renatic.app.response.LoginResponse
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,6 +37,7 @@ class LoginViewModel(context: Context): ViewModel() {
                         val sessionManager = SessionManager(context)
                         sessionManager.saveSession(idVal, tokenVal)
                         Log.e(TAG, "onResponse : Login berhasil")
+                        getUserProfile(idVal, tokenVal, context)
                         _isSuccess.value = true
                     } else {
                         Log.d(TAG, "onResponse : Login gagal")
@@ -50,6 +52,26 @@ class LoginViewModel(context: Context): ViewModel() {
                 Log.e(TAG, "onFailure : ${t.message}")
             }
         })
+    }
+
+    fun getUserProfile(id: String, token: String, context: Context) {
+        runBlocking {
+            launch {
+                val response = ApiConfig.getApiService(token).getProfile(id)
+                if (!response.error.toBooleanStrict()) {
+                    val userProfile = response.data
+                    saveData(userProfile[0]!!.nameUser, userProfile[0]!!.email, context)
+                    Log.e(TAG, "onResponse : Profile sukses didapatkan")
+                } else {
+                    Log.e(TAG, "onResponse : Profile gagal didapatkan")
+                }
+            }
+        }
+    }
+
+    private fun saveData(name: String, email: String, context: Context) {
+        val sessionManager = SessionManager(context)
+        sessionManager.saveProfile(name, email)
     }
 
     companion object {

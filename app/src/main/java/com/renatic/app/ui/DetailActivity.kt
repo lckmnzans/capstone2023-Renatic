@@ -1,4 +1,4 @@
-package com.renatic.app
+package com.renatic.app.ui
 
 import android.content.Intent
 import android.os.Build
@@ -23,6 +23,7 @@ class DetailActivity : AppCompatActivity() {
         if (detail != null) {
             setStoryDetail(detail)
         }
+
         binding.btnToFormRetina.setOnClickListener {
             val intent = Intent(this@DetailActivity, FormRetinaActivity::class.java)
             startActivity(intent)
@@ -32,12 +33,20 @@ class DetailActivity : AppCompatActivity() {
             val intent = Intent(this@DetailActivity, FormClinicalActivity::class.java)
             startActivity(intent)
         }
+
+        binding.ibEditProfile.setOnClickListener {
+            val intent = Intent(this@DetailActivity, DataPatientActivity::class.java)
+            intent.putExtra("ORIGIN", "FromDetailActivity")
+            intent.putExtra(DataPatientActivity.EXTRA_DETAIL, detail)
+            startActivity(intent)
+        }
     }
 
     private fun setStoryDetail(detail: Patients) {
         binding.tvNameDetail.text = ": ".plus(detail.name)
         binding.tvDobDetail.text = ": ".plus(detail.dob)
-        binding.tvSexDetail.text = ": ".plus(detail.sex)
+        binding.tvSexDetail.text = ": ".plus(getSex(detail.sex.toInt()))
+        binding.tvNumDetail.text = ": ".plus(detail.num)
     }
 
     @Suppress("DEPRECATION")
@@ -46,6 +55,23 @@ class DetailActivity : AppCompatActivity() {
             intent.getParcelableExtra(EXTRA_DETAIL, Patients::class.java)
         } else {
             intent.getParcelableExtra(EXTRA_DETAIL)
+        }
+    }
+
+    /*
+    private fun getAge(dateString: String): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val birthDate = LocalDate.parse(dateString, formatter)
+        val currentDate = LocalDate.now()
+        val age = Period.between(birthDate, currentDate).years
+        return age.toString()
+    }*/
+
+    private fun getSex(sexId: Int): String {
+        return when (sexId) {
+            1 -> "Laki-laki"
+            2 -> "Perempuan"
+            else -> "None"
         }
     }
 

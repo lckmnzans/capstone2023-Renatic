@@ -1,4 +1,4 @@
-package com.renatic.app
+package com.renatic.app.ui
 
 import android.content.Context
 import android.content.Intent

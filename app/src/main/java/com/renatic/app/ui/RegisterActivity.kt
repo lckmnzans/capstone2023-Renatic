@@ -1,4 +1,4 @@
-package com.renatic.app
+package com.renatic.app.ui
 
 import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity

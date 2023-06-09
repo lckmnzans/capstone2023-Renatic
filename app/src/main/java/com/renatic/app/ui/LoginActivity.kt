@@ -1,4 +1,4 @@
-package com.renatic.app
+package com.renatic.app.ui
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -72,35 +72,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-    /* DEPRECATED
-    private fun loginUser(email: String, password: String) {
-        val request = LoginRequest(email, password)
-        val client = ApiConfig.getApiService("").login(request)
-        client.enqueue(object : Callback<LoginResponse> {
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null && !responseBody.error.toBooleanStrict()) {
-                        val idVal = responseBody.data?.id.toString()
-                        val tokenVal = responseBody.data?.token.toString()
-                        val sessionManager = SessionManager(applicationContext)
-                        sessionManager.saveSession(idVal, tokenVal)
-                        Log.e(TAG, "onResponse : Login berhasil")
-                        toMain()
-                    } else {
-                        Log.e(TAG, "onResponse : Login gagal")
-                    }
-                } else {
-                    Log.e(TAG, "onResponse : Login gagal")
-                }
-            }
-
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Log.e(TAG, "onFailure : ${t.message}")
-            }
-        })
-    }*/
 
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {

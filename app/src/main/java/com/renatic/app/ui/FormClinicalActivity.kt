@@ -1,4 +1,4 @@
-package com.renatic.app
+package com.renatic.app.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

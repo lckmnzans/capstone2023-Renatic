@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.renatic.app.RegisterActivity
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.response.RegisterRequest
 import com.renatic.app.response.RegisterResponse

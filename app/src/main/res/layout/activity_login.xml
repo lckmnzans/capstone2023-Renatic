@@ -4,27 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".ui.LoginActivity">
     <ProgressBar
         android:id="@+id/load_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
     <LinearLayout
         android:id="@+id/login_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="center">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
         <ImageView
             android:contentDescription="@string/app_name"
             android:layout_width="150dp"
@@ -46,33 +46,35 @@
             android:layout_width="300dp"
             android:layout_height="45dp"
             android:layout_marginBottom="40dp"
+            android:background="@drawable/custom_frame"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:textSize="16sp"
-            android:inputType="textEmailAddress"
-            android:hint="@string/email"
-            android:background="@drawable/custom_frame"/>
+            tools:ignore="Autofill" />
         <EditText
             android:id="@+id/edt_password"
             android:layout_width="300dp"
             android:layout_height="45dp"
             android:layout_marginBottom="40dp"
+            android:background="@drawable/custom_frame"
+            android:hint="@string/password"
+            android:inputType="textPassword"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:textSize="16sp"
-            android:inputType="textPassword"
-            android:hint="@string/password"
-            android:background="@drawable/custom_frame"/>
+            tools:ignore="Autofill" />
         <Button
             android:id="@+id/btn_login"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:text="@string/login"/>
+            android:text="@string/login" />
         <Button
             android:id="@+id/btn_register"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:text="@string/register"/>
+            android:text="@string/register" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@ import android.content.Intent
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.renatic.app.ProfileActivity
+import com.renatic.app.ui.ProfileActivity
 import com.renatic.app.R
 
 class ToolbarManager(private val activity: AppCompatActivity) {

@@ -166,9 +166,15 @@ class EditDate: AppCompatEditText, View.OnTouchListener {
     }
 
     fun getDate(): String {
-        val text = text.toString()
-        return text
-        /*
+        return text.toString()
+    }
+
+    fun setDate(date: String) {
+        setText(date)
+    }
+
+    /*
+    fun getDate(): LocalDate? {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             return try {
                 LocalDate.parse(text, dateFormatter)
@@ -177,12 +183,12 @@ class EditDate: AppCompatEditText, View.OnTouchListener {
             }
         } else {
             TODO("VERSION.SDK_INT < O")
-        }*/
+        }
     }
 
     fun setDate(date: LocalDate) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             setText(date.format(dateFormatter))
         }
-    }
+    }*/
 }

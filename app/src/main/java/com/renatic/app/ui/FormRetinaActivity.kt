@@ -1,4 +1,4 @@
-package com.renatic.app
+package com.renatic.app.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -7,6 +7,9 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import com.renatic.app.databinding.ActivityFormRetinaBinding
 import com.renatic.app.manager.Toolbar2Manager
+import com.renatic.app.resizeBitmap
+import com.renatic.app.uriToBitmap
+import com.renatic.app.uriToFile
 import java.io.File
 
 class FormRetinaActivity : AppCompatActivity() {
