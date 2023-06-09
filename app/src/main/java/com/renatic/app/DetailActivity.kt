@@ -36,7 +36,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setStoryDetail(detail: Patients) {
         binding.tvNameDetail.text = ": ".plus(detail.name)
-        binding.tvAgeDetail.text = ": ".plus(detail.age)
+        binding.tvDobDetail.text = ": ".plus(detail.dob)
         binding.tvSexDetail.text = ": ".plus(detail.sex)
     }
 

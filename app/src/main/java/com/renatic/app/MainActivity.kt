@@ -57,9 +57,6 @@ class MainActivity : AppCompatActivity() {
         })
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            // Lakukan operasi untuk memperbarui data RecyclerView di sini
-
-            // Setelah selesai, beritahu SwipeRefreshLayout bahwa pembaruan selesai
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
@@ -74,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     private fun setPatientsData(patients: List<PatientItem>) {
         val list = ArrayList<Patients>()
         for (patient in patients) {
-            val patientData = Patients(patient.namePatient, patient.umur, patient.kelamin)
+            val patientData = Patients(patient.namePatient, patient.tanggalLahir.slice(0..9), patient.kelamin)
             list.add(patientData)
         }
 
@@ -83,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
         listPatients.setOnItemClickListener(object: PatientsAdapter.OnItemClickListener {
             override fun onItemClicked(item: Patients) {
-                val patientDetail = Patients(item.name, item.age, item.sex)
+                val patientDetail = Patients(item.name, item.dob, item.sex)
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
                 intent.putExtra(DetailActivity.EXTRA_DETAIL, patientDetail)
                 startActivity(intent)

@@ -22,9 +22,6 @@ data class PatientItem(
 	@field:SerializedName("noPatient")
 	val noPatient: String,
 
-	@field:SerializedName("umur")
-	val umur: Int,
-
 	@field:SerializedName("namePatient")
 	val namePatient: String,
 
@@ -32,5 +29,8 @@ data class PatientItem(
 	val weightPatient: Int,
 
 	@field:SerializedName("idPatient")
-	val idPatient: Int
+	val idPatient: Int,
+
+	@field:SerializedName("tanggalLahir")
+	val tanggalLahir: String
 )
