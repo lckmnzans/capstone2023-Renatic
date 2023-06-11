@@ -7,10 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.response.PatientItem
-import com.renatic.app.response.PatientRequest
 import com.renatic.app.response.PatientResponse
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,7 +42,7 @@ class MainViewModel(context: Context): ViewModel() {
     fun searchPatient(context: Context, bpjs: String) {
         _isLoading.value = true
         val token = context.getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token","")
-        val request = PatientRequest(bpjs)
+        val request = "{\"bpjs\":\"$bpjs\"}".toRequestBody("application/json".toMediaType())
         val call = ApiConfig.getApiService(token.toString()).getPatient(request)
         call.enqueue(object: Callback<PatientResponse> {
             override fun onResponse(

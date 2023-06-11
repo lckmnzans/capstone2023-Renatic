@@ -14,6 +14,7 @@ import com.renatic.app.api.ApiConfig
 import com.renatic.app.data.Patients
 import com.renatic.app.databinding.ActivityDataPatientBinding
 import com.renatic.app.manager.Toolbar2Manager
+import com.renatic.app.response.PatientRequest
 import com.renatic.app.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,8 +33,9 @@ class DataPatientActivity : AppCompatActivity() {
         toolbar.setupToolbar()
 
         setData()
-        val origin = getOrigin()
+        val origin = intent.getStringExtra("ORIGIN")
         val detail = getParcelableData()
+        val id = detail?.id ?: 0
 
         val temp = ArrayList<String>()
         if (detail != null && origin == "FromDetailActivity") {
@@ -58,7 +60,7 @@ class DataPatientActivity : AppCompatActivity() {
             if (data.all { it.isNotBlank() }) {
                 if (origin == "FromDetailActivity") {
                     if (temp.any { !data.contains(it) }) {
-                        //updateData(data[0], data[1], data[2], data[3], data[4])
+                        updateData(id, name, num, dob, sex, weight)
                         Toast.makeText(this, "Data telah dirubah", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this, "Data tidak ada yang dirubah", Toast.LENGTH_SHORT).show()
@@ -89,7 +91,7 @@ class DataPatientActivity : AppCompatActivity() {
 
     private fun submitData(name: String, num: String, dob: String, sex: String, weight: String) {
         val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
-        val request = Patients(name, num, dob, sex, weight)
+        val request = PatientRequest(name, num, dob, sex, weight)
         val client = ApiConfig.getApiService(token.toString()).addPatient(request)
         client.enqueue(object: Callback<RegisterResponse>{
             override fun onResponse(
@@ -114,10 +116,10 @@ class DataPatientActivity : AppCompatActivity() {
         })
     }
 
-    private fun updateData(name: String, num: String, dob: String, sex: String, weight: String) {
+    private fun updateData(id: Int, name: String, num: String, dob: String, sex: String, weight: String) {
         val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
-        val request = Patients(name, num, dob, sex, weight)
-        val client = ApiConfig.getApiService(token.toString()).editPatient(request)
+        val request = PatientRequest(name, num, dob, sex, weight)
+        val client = ApiConfig.getApiService(token.toString()).editPatient(id, request)
         client.enqueue(object: Callback<RegisterResponse>{
             override fun onResponse(
                 call: Call<RegisterResponse>,
@@ -136,7 +138,7 @@ class DataPatientActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d(TAG, t.message.toString())
             }
         })
     }
@@ -148,10 +150,6 @@ class DataPatientActivity : AppCompatActivity() {
         } else {
             intent.getParcelableExtra(EXTRA_DETAIL)
         }
-    }
-
-    private fun getOrigin(): String? {
-        return intent.getStringExtra("ORIGIN")
     }
 
     companion object {

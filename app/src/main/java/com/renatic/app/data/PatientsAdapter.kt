@@ -26,7 +26,7 @@ class PatientsAdapter(private val listPatients: ArrayList<Patients>): RecyclerVi
     override fun getItemCount(): Int = listPatients.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val (name, _, dob, sex) = listPatients[position]
+        val (_, name, _, dob, sex) = listPatients[position]
         holder.tvName.text = name
         if (sex.toInt() == 1) {
             holder.tvSex.text = "Laki-laki"

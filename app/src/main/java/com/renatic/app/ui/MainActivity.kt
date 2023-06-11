@@ -64,7 +64,14 @@ class MainActivity : AppCompatActivity() {
         if (patients != null) {
             val list = ArrayList<Patients>()
             for (patient in patients) {
-                val patientData = Patients(patient.namePatient, patient.noPatient, patient.tanggalLahir.slice(0..9), patient.kelamin.toString(), patient.weightPatient.toString())
+                val patientData = Patients(
+                    id = patient.idPatient,
+                    name = patient.namePatient,
+                    num = patient.noPatient,
+                    dob = patient.tanggalLahir.slice(0..9),
+                    sex = patient.kelamin.toString(),
+                    weight = patient.weightPatient.toString()
+                )
                 list.add(patientData)
             }
 

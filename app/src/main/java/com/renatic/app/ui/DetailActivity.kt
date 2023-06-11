@@ -21,7 +21,7 @@ class DetailActivity : AppCompatActivity() {
 
         val detail = getParceableData()
         if (detail != null) {
-            setStoryDetail(detail)
+            setPatientDetail(detail)
         }
 
         binding.btnToFormRetina.setOnClickListener {
@@ -42,7 +42,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setStoryDetail(detail: Patients) {
+    private fun setPatientDetail(detail: Patients) {
         binding.tvNameDetail.text = ": ".plus(detail.name)
         binding.tvDobDetail.text = ": ".plus(detail.dob)
         binding.tvSexDetail.text = ": ".plus(getSex(detail.sex.toInt()))
