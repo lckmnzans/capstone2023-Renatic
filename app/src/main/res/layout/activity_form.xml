@@ -18,6 +18,17 @@
         android:src="@drawable/custom_line"
         app:layout_constraintTop_toBottomOf="@id/toolbar2"/>
 
+    <ProgressBar
+        android:id="@+id/load_form"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar2"
+        tools:visibility="visible" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,6 +59,7 @@
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/layout_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
@@ -58,15 +70,39 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_act_title">
 
-                <ImageButton
-                    android:id="@+id/ib_add_photo"
-                    android:layout_width="170dp"
-                    android:layout_height="170dp"
-                    android:layout_marginBottom="20dp"
+                <ImageView
+                    android:id="@+id/iv_add_photo"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/custom_frame_dashed"
                     android:contentDescription="@string/add_photo"
+                    android:scaleType="center"
                     android:src="@drawable/ic_add_photo" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/btn_take_pic"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="0.5"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="start"
+                        android:text="@string/take_pict"/>
+                    <Button
+                        android:id="@+id/btn_uplo_pic"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="0.5"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="end"
+                        android:text="@string/upload"/>
+                </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

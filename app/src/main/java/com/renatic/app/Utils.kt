@@ -1,5 +1,6 @@
 package com.renatic.app
 
+import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 private const val FILENAME_FORMAT = "dd-MMM-yyyy"
+private const val MAXIMAL_SIZE = 1000000
 
 val timeStamp: String = SimpleDateFormat(
     FILENAME_FORMAT,
@@ -61,4 +63,31 @@ fun resizeBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
     matrix.postScale(scaleFactor, scaleFactor)
 
     return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, false)
+}
+
+fun createFile(application: Application): File {
+    val mediaDir = application.externalMediaDirs.firstOrNull()?.let {
+        File(it, application.resources.getString(R.string.app_name)).apply { mkdirs() }
+    }
+
+    val outputDirectory = if (
+        mediaDir != null && mediaDir.exists()
+    ) mediaDir else application.filesDir
+
+    return File(outputDirectory, "$timeStamp.jpg")
+}
+
+fun reduceFileImage(file: File): File {
+    val bitmap = BitmapFactory.decodeFile(file.path)
+    var compressQuality = 100
+    var streamLength: Int
+    do {
+        val bmpStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
+        val bmpPicByteArray = bmpStream.toByteArray()
+        streamLength = bmpPicByteArray.size
+        compressQuality -= 5
+    } while (streamLength > MAXIMAL_SIZE)
+    bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
+    return file
 }

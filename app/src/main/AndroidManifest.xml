@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".Renatic"
@@ -15,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Renatic"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.CameraActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.FormActivity"
             android:exported="false" />
@@ -45,7 +50,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>
