@@ -18,10 +18,7 @@ class ProfileActivity : AppCompatActivity() {
         toolbar = Toolbar2Manager(this)
         toolbar.setupToolbar()
 
-        val profile = getSharedPreferences("LoginSession", Context.MODE_PRIVATE)
-        val userName = profile.getString("name", "").toString()
-        val userEmail = profile.getString("email", "").toString()
-        setData(userName, userEmail)
+        setData()
 
         binding.btnLogout.setOnClickListener {
             getSharedPreferences("LoginSession", Context.MODE_PRIVATE).edit().clear().apply()
@@ -30,8 +27,11 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun setData(name: String, email: String) {
-        binding.tvProfileName.text = name
-        binding.tvProfileEmail.text = email
+    private fun setData() {
+        val profile = getSharedPreferences("LoginSession", Context.MODE_PRIVATE)
+        val userName = profile.getString("name", "").toString()
+        val userEmail = profile.getString("email", "").toString()
+        binding.tvProfileName.text = userName
+        binding.tvProfileEmail.text = userEmail
     }
 }

@@ -1,6 +1,7 @@
 package com.renatic.app.api
 
 import com.renatic.app.response.*
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -39,4 +40,21 @@ interface ApiService {
         @Path("id") id: Int,
         @Body patientRequest: PatientRequest
     ): Call<RegisterResponse>
+
+    @POST("addklinis")
+    fun addClinical(
+        @Header("id") id: Int,
+        @Body clinicalRequest: ClinicalRequest
+    ): Call<RegisterResponse>
+
+    @GET("dataKlinis/{id}")
+    fun getClinical(
+        @Path("id") id: String
+    ): Call<ClinicalResponse>
+
+    @Multipart
+    @POST("upload")
+    fun addImage(
+        @Part file: MultipartBody.Part
+    ): Call<UploadResponse>
 }

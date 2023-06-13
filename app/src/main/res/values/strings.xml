@@ -16,7 +16,7 @@
     <string name="form_retina">Form Ambil Gambar Retina</string>
     <string name="form_patient">Form Data Pasien</string>
     <string name="form_clinical">Form Data Klinis</string>
-    <string name="upload">Unggah</string>
+    <string name="upload">Unggah Gambar</string>
     <string name="submit">Submit</string>
     <string name="take_pict">Ambil Gambar</string>
     <string name="status">Status pemeriksaan</string>
@@ -43,6 +43,7 @@
 
     <string name="selected_item">dipilih</string>
     <string-array name="sexes">
+        <item>Silahkan pilih</item>
         <item>Laki-laki</item>
         <item>Perempuan</item>
     </string-array>

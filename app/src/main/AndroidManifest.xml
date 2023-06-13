@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".Renatic"
@@ -16,9 +18,6 @@
         android:theme="@style/Theme.Renatic"
         tools:targetApi="31">
         <activity
-            android:name=".ui.FormActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.SplashActivity"
             android:exported="true"
             android:noHistory="true">
@@ -29,10 +28,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.DetailActivity"
+            android:name=".ui.FormPatientActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.DataPatientActivity"
+            android:name=".ui.CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.FormClinicalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.ProfileActivity"
@@ -45,7 +50,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -1,7 +1,6 @@
 package com.renatic.app.ui
 
 import android.animation.ObjectAnimator
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,11 +22,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val isLoggedIn = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getBoolean("isLoggedIn", false)
-        if (isLoggedIn) {
-            toMain()
-        }
 
         binding.edtPassword.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(t: CharSequence?, p1: Int, p2: Int, p3: Int) {

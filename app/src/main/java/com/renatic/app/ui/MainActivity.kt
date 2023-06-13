@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         toolbar.setupToolbar()
 
         binding.fabAdd.setOnClickListener {
-            val intent = Intent(this@MainActivity, DataPatientActivity::class.java)
+            val intent = Intent(this@MainActivity, FormPatientActivity::class.java)
             intent.putExtra("ORIGIN", "FromMainActivity")
             startActivity(intent)
         }

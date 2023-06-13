@@ -12,9 +12,7 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.renatic.app.R
-import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
 
 class EditDate: AppCompatEditText, View.OnTouchListener {
     constructor(context: Context): super(context) {
@@ -28,12 +26,6 @@ class EditDate: AppCompatEditText, View.OnTouchListener {
     }
     private lateinit var clearButtonImage: Drawable
 
-    private val dateFormatter: DateTimeFormatter =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            DateTimeFormatter.ofPattern("yyyy/MM/dd")
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
     private val dateFormat = "####-##-##"
     private val validDigits = "0123456789"
     private var isUpdating = false
@@ -172,23 +164,4 @@ class EditDate: AppCompatEditText, View.OnTouchListener {
     fun setDate(date: String) {
         setText(date)
     }
-
-    /*
-    fun getDate(): LocalDate? {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return try {
-                LocalDate.parse(text, dateFormatter)
-            } catch (e: DateTimeParseException) {
-                null
-            }
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
-    }
-
-    fun setDate(date: LocalDate) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            setText(date.format(dateFormatter))
-        }
-    }*/
 }

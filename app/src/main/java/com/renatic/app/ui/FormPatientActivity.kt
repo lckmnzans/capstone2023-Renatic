@@ -12,7 +12,7 @@ import android.widget.Toast
 import com.renatic.app.R
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.data.Patients
-import com.renatic.app.databinding.ActivityDataPatientBinding
+import com.renatic.app.databinding.ActivityFormPatientBinding
 import com.renatic.app.manager.Toolbar2Manager
 import com.renatic.app.response.PatientRequest
 import com.renatic.app.response.RegisterResponse
@@ -20,13 +20,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DataPatientActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDataPatientBinding
+class FormPatientActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityFormPatientBinding
     private lateinit var toolbar: Toolbar2Manager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDataPatientBinding.inflate(layoutInflater)
+        binding = ActivityFormPatientBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         toolbar = Toolbar2Manager(this)
@@ -44,7 +44,7 @@ class DataPatientActivity : AppCompatActivity() {
                 it.etName.setText(detail.name)
                 it.etNum.setText(detail.num)
                 it.etDob.setDate(detail.dob)
-                it.spinnerSex.setSelection(detail.sex.toInt() - 1)
+                it.spinnerSex.setSelection(detail.sex.toInt())
                 it.etWeight.setText(detail.weight)
             }
         }
@@ -53,11 +53,11 @@ class DataPatientActivity : AppCompatActivity() {
             val name = binding.etName.text.toString()
             val num = binding.etNum.text.toString()
             val dob = binding.etDob.getDate()
-            val sex = arrayOf(1,2)[binding.spinnerSex.selectedItemPosition].toString()
+            val sex = binding.spinnerSex.selectedItemPosition.toString()
             val weight = binding.etWeight.text.toString()
             val data = listOf(name, num, dob, sex, weight)
 
-            if (data.all { it.isNotBlank() }) {
+            if ((data.all { it.isNotBlank() }) && (data[3] != "0")) {
                 if (origin == "FromDetailActivity") {
                     if (temp.any { !data.contains(it) }) {
                         updateData(id, name, num, dob, sex, weight)
@@ -77,7 +77,8 @@ class DataPatientActivity : AppCompatActivity() {
 
     private fun setData() {
         val sexes = resources.getStringArray(R.array.sexes)
-        binding.spinnerSex.adapter = ArrayAdapter(this@DataPatientActivity, android.R.layout.simple_spinner_dropdown_item, sexes)
+        binding.spinnerSex.adapter = ArrayAdapter(this@FormPatientActivity, android.R.layout.simple_spinner_dropdown_item, sexes)
+        binding.spinnerSex.setSelection(0)
         binding.spinnerSex.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 //
@@ -153,7 +154,7 @@ class DataPatientActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val TAG = "DataPatientActivity"
+        const val TAG = "FormPatientActivity"
         const val EXTRA_DETAIL = "extra_detail"
     }
 }

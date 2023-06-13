@@ -1,12 +1,18 @@
 package com.renatic.app.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.renatic.app.api.ApiConfig
 import com.renatic.app.data.Patients
 import com.renatic.app.databinding.ActivityDetailBinding
 import com.renatic.app.manager.Toolbar2Manager
+import com.renatic.app.response.ClinicalResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -24,26 +30,16 @@ class DetailActivity : AppCompatActivity() {
             setPatientDetail(detail)
         }
 
-        /*
-        binding.btnToFormRetina.setOnClickListener {
-            val intent = Intent(this@DetailActivity, FormRetinaActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.btnToFormClinical.setOnClickListener {
-            val intent = Intent(this@DetailActivity, FormClinicalActivity::class.java)
-            startActivity(intent)
-        }*/
-
         binding.btnToForm.setOnClickListener {
-            val intent = Intent(this@DetailActivity, FormActivity::class.java)
+            val intent = Intent(this@DetailActivity, FormClinicalActivity::class.java)
+            intent.putExtra(FormClinicalActivity.EXTRA_DETAIL, detail)
             startActivity(intent)
         }
 
         binding.ibEditProfile.setOnClickListener {
-            val intent = Intent(this@DetailActivity, DataPatientActivity::class.java)
+            val intent = Intent(this@DetailActivity, FormPatientActivity::class.java)
             intent.putExtra("ORIGIN", "FromDetailActivity")
-            intent.putExtra(DataPatientActivity.EXTRA_DETAIL, detail)
+            intent.putExtra(FormPatientActivity.EXTRA_DETAIL, detail)
             startActivity(intent)
         }
     }
@@ -62,6 +58,28 @@ class DetailActivity : AppCompatActivity() {
         } else {
             intent.getParcelableExtra(EXTRA_DETAIL)
         }
+    }
+
+    private fun getClinicalData(id: String) {
+        val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token","")
+        val client = ApiConfig.getApiService(token.toString()).getClinical(id)
+        client.enqueue(object: Callback<ClinicalResponse>{
+            override fun onResponse(
+                call: Call<ClinicalResponse>,
+                response: Response<ClinicalResponse>,
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if ((responseBody != null) && !responseBody.error.toBooleanStrict()) {
+                        //
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ClinicalResponse>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     /*
