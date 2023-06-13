@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="@string/name"
+            android:text="@string/bla"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="@string/dob"
+            android:text="@string/bla"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -37,9 +37,22 @@
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="@string/sex"
+            android:text="@string/bla"
             android:textSize="14sp"
             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_frame"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:text="@string/status"
+            android:visibility="gone" />
 
     </LinearLayout>
 

@@ -66,7 +66,7 @@ class DataPatientActivity : AppCompatActivity() {
                         Toast.makeText(this, "Data tidak ada yang dirubah", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    //submitData(data[0], data[1], data[2], data[3], data[4])
+                    submitData(name, num, dob, sex, weight)
                     Toast.makeText(this, "Data telah ditambahkan", Toast.LENGTH_SHORT).show()
                 }
             } else {
@@ -80,7 +80,7 @@ class DataPatientActivity : AppCompatActivity() {
         binding.spinnerSex.adapter = ArrayAdapter(this@DataPatientActivity, android.R.layout.simple_spinner_dropdown_item, sexes)
         binding.spinnerSex.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                //Toast.makeText(this@DataPatientActivity, getString(R.string.selected_item) + " " + "" + sexes[position], Toast.LENGTH_SHORT).show()
+                //
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {

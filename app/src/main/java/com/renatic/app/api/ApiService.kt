@@ -1,7 +1,5 @@
 package com.renatic.app.api
 
-import com.renatic.app.data.Patients
-import com.renatic.app.data.PatientsReq
 import com.renatic.app.response.*
 import okhttp3.RequestBody
 import retrofit2.Call
