@@ -24,6 +24,7 @@ class DetailActivity : AppCompatActivity() {
             setPatientDetail(detail)
         }
 
+        /*
         binding.btnToFormRetina.setOnClickListener {
             val intent = Intent(this@DetailActivity, FormRetinaActivity::class.java)
             startActivity(intent)
@@ -31,6 +32,11 @@ class DetailActivity : AppCompatActivity() {
 
         binding.btnToFormClinical.setOnClickListener {
             val intent = Intent(this@DetailActivity, FormClinicalActivity::class.java)
+            startActivity(intent)
+        }*/
+
+        binding.btnToForm.setOnClickListener {
+            val intent = Intent(this@DetailActivity, FormActivity::class.java)
             startActivity(intent)
         }
 

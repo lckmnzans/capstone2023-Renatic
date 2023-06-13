@@ -5,21 +5,21 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import com.renatic.app.databinding.ActivityFormRetinaBinding
+import com.renatic.app.databinding.ActivityFormBinding
 import com.renatic.app.manager.Toolbar2Manager
 import com.renatic.app.resizeBitmap
 import com.renatic.app.uriToBitmap
 import com.renatic.app.uriToFile
 import java.io.File
 
-class FormRetinaActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityFormRetinaBinding
+class FormActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityFormBinding
     private lateinit var toolbar: Toolbar2Manager
     private var getFile: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityFormRetinaBinding.inflate(layoutInflater)
+        binding = ActivityFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         toolbar = Toolbar2Manager(this)
@@ -40,7 +40,7 @@ class FormRetinaActivity : AppCompatActivity() {
         if (result.resultCode == RESULT_OK) {
             val selectedImg = result.data?.data as Uri
             selectedImg.let { uri ->
-                val myFile = uriToFile(uri, this@FormRetinaActivity)
+                val myFile = uriToFile(uri, this@FormActivity)
                 getFile = myFile
                 val bitmap = uriToBitmap(uri, this)
                 bitmap?.let { imageBitmap ->
