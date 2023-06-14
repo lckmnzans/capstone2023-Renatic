@@ -12,7 +12,7 @@
         android:padding="10dp"
         android:background="@color/yellow_200">
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
@@ -22,7 +22,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_dob"
+            android:id="@+id/tv_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
@@ -32,7 +32,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_sex"
+            android:id="@+id/tv_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"

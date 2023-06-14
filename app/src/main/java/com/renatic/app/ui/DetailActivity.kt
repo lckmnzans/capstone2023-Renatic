@@ -5,10 +5,13 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.renatic.app.api.ApiConfig
+import com.renatic.app.data.ClinicalAdapter
 import com.renatic.app.data.Patients
 import com.renatic.app.databinding.ActivityDetailBinding
 import com.renatic.app.manager.Toolbar2Manager
+import com.renatic.app.response.ClinicalItem
 import com.renatic.app.response.ClinicalResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,6 +31,8 @@ class DetailActivity : AppCompatActivity() {
         val detail = getParceableData()
         if (detail != null) {
             setPatientDetail(detail)
+            binding.rvHistoris.layoutManager = LinearLayoutManager(this)
+            getClinicalData(detail.id.toString())
         }
 
         binding.btnToForm.setOnClickListener {
@@ -51,6 +56,32 @@ class DetailActivity : AppCompatActivity() {
         binding.tvNumDetail.text = ": ".plus(detail.num)
     }
 
+    private fun setPatientClinical(listClinical: List<ClinicalItem?>) {
+        if (listClinical.isNotEmpty()) {
+            val list = ArrayList<ClinicalItem>()
+            for (clinicalItem in listClinical) {
+                if (clinicalItem != null) {
+                    val item = ClinicalItem(
+                        pregnancies = clinicalItem.pregnancies,
+                        idKlinis = clinicalItem.idKlinis,
+                        glucose = clinicalItem.glucose,
+                        insulin = clinicalItem.insulin,
+                        patient = clinicalItem.patient,
+                        skin = clinicalItem.skin,
+                        diabetesDegree = clinicalItem.diabetesDegree,
+                        tanggalLahir = clinicalItem.tanggalLahir,
+                        blood = clinicalItem.blood,
+                        bmi = clinicalItem.bmi
+                    )
+                    list.add(item)
+                }
+            }
+
+            val listClinical = ClinicalAdapter(list)
+            binding.rvHistoris.adapter = listClinical
+        }
+    }
+
     @Suppress("DEPRECATION")
     private fun getParceableData(): Patients? {
         return if (Build.VERSION.SDK_INT >= 33) {
@@ -71,7 +102,7 @@ class DetailActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if ((responseBody != null) && !responseBody.error.toBooleanStrict()) {
-                        //
+                        setPatientClinical(responseBody.data)
                     }
                 }
             }

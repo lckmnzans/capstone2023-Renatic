@@ -60,6 +60,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getListOfPatient(this)
+    }
+
     private fun setPatientsData(patients: List<PatientItem>?) {
         if (patients != null) {
             val list = ArrayList<Patients>()

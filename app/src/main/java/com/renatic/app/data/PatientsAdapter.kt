@@ -13,9 +13,9 @@ class PatientsAdapter(private val listPatients: ArrayList<Patients>): RecyclerVi
     }
 
     class ViewHolder(private val binding: ItemViewBinding): RecyclerView.ViewHolder(binding.root) {
-        val tvName = binding.tvName
-        val tvSex = binding.tvSex
-        val tvDob = binding.tvDob
+        val tvName = binding.tv1
+        val tvSex = binding.tv2
+        val tvDob = binding.tv3
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
