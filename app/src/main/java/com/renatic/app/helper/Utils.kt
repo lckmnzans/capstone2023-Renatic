@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
+import com.renatic.app.data.Patients
+import com.renatic.app.response.PatientItem
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -90,4 +92,26 @@ fun reduceFileImage(file: File): File {
     } while (streamLength > MAXIMAL_SIZE)
     bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
     return file
+}
+
+fun PatientItem.toPatients(): Patients {
+    return Patients(
+        id = idPatient,
+        name = namePatient,
+        num = noPatient,
+        dob = tanggalLahir.slice(0..9),
+        sex = kelamin.toString(),
+        weight = weightPatient.toString()
+    )
+}
+
+fun Patients.toPatientItem(): PatientItem {
+    return PatientItem(
+        kelamin = sex.toInt(),
+        noPatient = num,
+        namePatient = name,
+        weightPatient = weight.toInt(),
+        idPatient = id ?: 0,
+        tanggalLahir = dob
+    )
 }

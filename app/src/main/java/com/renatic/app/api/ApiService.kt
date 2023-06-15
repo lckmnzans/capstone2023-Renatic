@@ -25,10 +25,16 @@ interface ApiService {
     @GET("patient")
     suspend fun getAllPatient(): PatientResponse
 
+    @GET("showdatapatient/{id}")
+    suspend fun getPatient(
+        @Path("id") id: String
+    ): PatientResponse
+
     @POST("search")
-    fun getPatient(
+    fun searchPatient(
         @Body searchRequest: RequestBody
     ): Call<PatientResponse>
+
 
     @POST("addpatient")
     fun addPatient(

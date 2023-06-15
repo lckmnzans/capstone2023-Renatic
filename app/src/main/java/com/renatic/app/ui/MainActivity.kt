@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.renatic.app.data.Patients
 import com.renatic.app.data.PatientsAdapter
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         binding.svMain.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        binding.svMain.queryHint = "Cari"
+        binding.svMain.queryHint = "Cari dengan nomor BPJS/JKN"
         binding.svMain.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.svMain.clearFocus()
@@ -58,6 +60,16 @@ class MainActivity : AppCompatActivity() {
         viewModel.patientList.observe(this) { listOfPatients ->
             setPatientsData(listOfPatients)
         }
+
+        val callback = object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (!viewModel.listPatientStack.isEmpty()) {
+                    val previousResponse = viewModel.listPatientStack.pop()
+                    setPatientsData(previousResponse)
+                }
+            }
+        }
+        this.onBackPressedDispatcher.addCallback(this@MainActivity, callback)
     }
 
     override fun onResume() {

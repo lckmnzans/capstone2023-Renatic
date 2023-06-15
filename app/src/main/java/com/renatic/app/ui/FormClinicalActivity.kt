@@ -220,8 +220,6 @@ class FormClinicalActivity : AppCompatActivity() {
                         val responseBody = response.body()
                         if ((responseBody != null) && !responseBody.error.toBooleanStrict()) {
                             Toast.makeText(this@FormClinicalActivity, responseBody.message, Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this@FormClinicalActivity, DetailActivity::class.java)
-                            startActivity(intent)
                             finish()
                         }
                     } else {

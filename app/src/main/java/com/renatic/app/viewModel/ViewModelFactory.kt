@@ -13,6 +13,8 @@ class ViewModelFactory(private val context: Context): ViewModelProvider.Factory 
             return RegisterViewModel(context) as T
         } else if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
             return MainViewModel(context) as T
+        } else if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
+            return DetailViewModel(context) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

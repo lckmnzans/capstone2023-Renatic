@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.renatic.app.api.ApiConfig
+import com.renatic.app.helper.Stack
 import com.renatic.app.response.PatientItem
 import com.renatic.app.response.PatientResponse
 import kotlinx.coroutines.launch
@@ -24,6 +25,8 @@ class MainViewModel(context: Context): ViewModel() {
     private val _patientList = MutableLiveData<List<PatientItem>?>()
     val patientList: LiveData<List<PatientItem>?> = _patientList
 
+    val listPatientStack = Stack<List<PatientItem>>()
+
     fun getListOfPatient(context: Context) {
         _isLoading.value = true
         val token = context.getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
@@ -34,6 +37,7 @@ class MainViewModel(context: Context): ViewModel() {
                 if (listOfPatients != null) {
                     _isLoading.value = false
                     _patientList.value = listOfPatients
+                    listPatientStack.push(listOfPatients)
                 }
             }
         }
@@ -43,7 +47,7 @@ class MainViewModel(context: Context): ViewModel() {
         _isLoading.value = true
         val token = context.getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token","")
         val request = "{\"bpjs\":\"$bpjs\"}".toRequestBody("application/json".toMediaType())
-        val call = ApiConfig.getApiService(token.toString()).getPatient(request)
+        val call = ApiConfig.getApiService(token.toString()).searchPatient(request)
         call.enqueue(object: Callback<PatientResponse> {
             override fun onResponse(
                 call: Call<PatientResponse>,
@@ -54,7 +58,10 @@ class MainViewModel(context: Context): ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null && !responseBody.error.toBooleanStrict()) {
                         val listOfPatients = responseBody.data
-                        _patientList.value = listOfPatients
+                        if (listOfPatients != null) {
+                            listPatientStack.push(listOfPatients)
+                            _patientList.value = listOfPatients
+                        }
                         Log.d(TAG, "onResponse: Pasien berhasil ditemukan")
                     } else {
                         Log.d(TAG, "onResponse: Pasien tidak ditemukan")
