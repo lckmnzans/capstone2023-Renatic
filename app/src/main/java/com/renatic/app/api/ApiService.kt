@@ -67,4 +67,18 @@ interface ApiService {
     fun addImage(
         @Part file: MultipartBody.Part
     ): Call<UploadResponse>
+
+    @Multipart
+    @POST("tesklinis")
+    fun inputData(
+        @Header("id") id: Int,
+        @Part file: MultipartBody.Part,
+        @Part("Pregnancies") pregnancies: RequestBody,
+        @Part("Glucose") glucose: RequestBody,
+        @Part("BloodPressure") bloodPressure: RequestBody,
+        @Part("SkinThickness") skinThickness: RequestBody,
+        @Part("Insulin") insulin: RequestBody,
+        @Part("BMI") bmi: RequestBody,
+        @Part("DiabetesPedigreeFunction") diabetesPedigreeFunction: RequestBody
+    ): Call<InputDataResponse>
 }

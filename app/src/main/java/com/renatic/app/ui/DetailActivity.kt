@@ -86,7 +86,7 @@ class DetailActivity : AppCompatActivity() {
                         patient = clinicalItem.patient,
                         skin = clinicalItem.skin,
                         diabetesDegree = clinicalItem.diabetesDegree,
-                        tanggalLahir = clinicalItem.tanggalLahir,
+                        tanggalLahir = clinicalItem?.tanggalLahir ?: "",
                         blood = clinicalItem.blood,
                         bmi = clinicalItem.bmi
                     )

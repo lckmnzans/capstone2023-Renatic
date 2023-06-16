@@ -21,12 +21,11 @@ import com.renatic.app.api.ApiConfig
 import com.renatic.app.data.Patients
 import com.renatic.app.databinding.ActivityFormClinicalBinding
 import com.renatic.app.manager.Toolbar2Manager
-import com.renatic.app.data.request.ClinicalRequest
-import com.renatic.app.data.response.RegisterResponse
-import com.renatic.app.data.response.UploadResponse
+import com.renatic.app.data.response.InputDataResponse
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,7 +35,6 @@ class FormClinicalActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFormClinicalBinding
     private lateinit var toolbar: Toolbar2Manager
     private var getFile: File? = null
-    private var isUploaded = MutableLiveData<Boolean>()
 
     private val launcherIntentCameraX = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -102,12 +100,6 @@ class FormClinicalActivity : AppCompatActivity() {
         toolbar = Toolbar2Manager(this)
         toolbar.setupToolbar()
 
-        isUploaded.observe(this) {
-            if (it) {
-                Toast.makeText(this@FormClinicalActivity, "Data berhasil diunggah", Toast.LENGTH_SHORT).show()
-            }
-        }
-
         binding.btnTakePic.setOnClickListener {
             if (!allPermissionsGranted()) {
                 ActivityCompat.requestPermissions(
@@ -130,8 +122,7 @@ class FormClinicalActivity : AppCompatActivity() {
 
         binding.btnSubmit.setOnClickListener {
             val data = getInputData()
-            uploadDataClinical(data)
-            //uploadDataImage()
+            submitData(data)
         }
     }
 
@@ -143,6 +134,7 @@ class FormClinicalActivity : AppCompatActivity() {
         val intent = Intent(this, CameraActivity::class.java)
         launcherIntentCameraX.launch(intent)
     }
+
 
     private fun getInputData(): List<Double> {
         val pregnancies = binding.etPregnancies.text.toString().toDoubleOrZero()
@@ -156,39 +148,8 @@ class FormClinicalActivity : AppCompatActivity() {
         return listOf(pregnancies, glucose, bpressure, sthickness, insulin, bmi, diabetes)
     }
 
-    private fun uploadDataClinical(data: List<Double>) {
-        if (!data.contains(0.0)) {
-            val data = ClinicalRequest(data[0], data[1], data[2], data[3], data[4], data[5], data[6])
-            val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
-            val id = getParceableData()?.id ?: 0
-            if (id != 0) {
-                isUploaded.value = false
-                val client = ApiConfig.getApiService(token.toString()).addClinical(id, data)
-                client.enqueue(object: Callback<RegisterResponse>{
-                    override fun onResponse(
-                        call: Call<RegisterResponse>,
-                        response: Response<RegisterResponse>,
-                    ) {
-                        if (response.isSuccessful) {
-                            val responseBody = response.body()
-                            Log.d(TAG, "onResponse: ${responseBody!!.message}")
-                        } else {
-                            Log.d(TAG, "onResponse: ${response.message()}")
-                        }
-                    }
-
-                    override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                        Log.d(TAG, "onFailure: ${t.message}")
-                    }
-                })
-            }
-        } else {
-            Toast.makeText(this@FormClinicalActivity, "Silahkan lengkapi data-data terlebih dahulu", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun uploadDataImage() {
-        if (getFile != null) {
+    private fun submitData(data: List<Double>) {
+        if ((getFile != null) && !data.contains(0.0)) {
             val file = reduceFileImage(getFile as File)
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaType())
             val imageMultipart = MultipartBody.Part.createFormData(
@@ -196,29 +157,49 @@ class FormClinicalActivity : AppCompatActivity() {
                 file.name,
                 requestImageFile
             )
+            val pregnancies = data[0].toString().toRequestBody("text/plain".toMediaType())
+            val glucose = data[1].toString().toRequestBody("text/plain".toMediaType())
+            val bloodPressure = data[2].toString().toRequestBody("text/plain".toMediaType())
+            val skinThickness = data[3].toString().toRequestBody("text/plain".toMediaType())
+            val insulin = data[4].toString().toRequestBody("text/plain".toMediaType())
+            val bmi = data[5].toString().toRequestBody("text/plain".toMediaType())
+            val diabetesPedigreeFunction = data[6].toString().toRequestBody("text/plain".toMediaType())
             val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
-            isUploaded.value = false
-            val client = ApiConfig.getApiService(token.toString()).addImage(imageMultipart)
-            client.enqueue(object: Callback<UploadResponse>{
-                override fun onResponse(
-                    call: Call<UploadResponse>,
-                    response: Response<UploadResponse>,
-                ) {
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()
-                        if ((responseBody != null) && !responseBody.error.toBooleanStrict()) {
-
+            val id = getParceableData()?.id ?: 0
+            if (id != 0) {
+                showLoading(true)
+                val client = ApiConfig.getApiService(token.toString()).inputData(
+                    id,
+                    imageMultipart,
+                    pregnancies,
+                    glucose,
+                    bloodPressure,
+                    skinThickness,
+                    insulin,
+                    bmi,
+                    diabetesPedigreeFunction
+                )
+                client.enqueue(object: Callback<InputDataResponse>{
+                    override fun onResponse(
+                        call: Call<InputDataResponse>,
+                        response: Response<InputDataResponse>,
+                    ) {
+                        showLoading(false)
+                        if (response.isSuccessful) {
+                            val responseBody = response.body()
+                            Log.d(TAG, "onResponse: ${responseBody!!.message}")
+                        } else {
+                            Log.d(TAG, "onResponse: ${response.message()}")
                         }
-                        Log.d(TAG, "onResponse: ${responseBody!!.message}")
-                    } else {
-                        Log.d(TAG, "onResponse: ${response.message()}")
+                        Toast.makeText(this@FormClinicalActivity, "Data berhasil diunggah", Toast.LENGTH_SHORT).show()
                     }
-                }
 
-                override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
-                    Log.d(TAG, "onFailure: ${t.message}")
-                }
-            })
+                    override fun onFailure(call: Call<InputDataResponse>, t: Throwable) {
+                        showLoading(false)
+                        Log.d(TAG, "onFailure: ${t.message}")
+                    }
+                })
+            }
         } else {
             Toast.makeText(this@FormClinicalActivity, "Silahkan lengkapi data-data terlebih dahulu", Toast.LENGTH_SHORT).show()
         }
