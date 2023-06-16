@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.data.request.ScreeningRequest
 import com.renatic.app.data.response.*
@@ -70,26 +72,42 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun getScreeningTest(request: ScreeningRequest) {
+        showLoading(true)
         val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token","")
         lifecycleScope.launch(Dispatchers.IO) {
             val client = ApiConfig.getApiService(token.toString()).screeningTest(request)
             withContext(Dispatchers.Main) {
+                showLoading(false)
                 val resultKlinis = client.data.formKlinis
                 val resultRetina = client.data.imgKlinis
-                setResult(resultKlinis, resultRetina)
+                val imgUrl = request.img
+                setResult(resultKlinis, resultRetina, imgUrl)
                 Toast.makeText(this@ResultActivity, "Hasil screening telah didapat", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun setResult(resultKlinis: FormKlinis, resultRetina: ImgKlinis) {
+    private fun setResult(resultKlinis: FormKlinis, resultRetina: ImgKlinis, imgUrl: String) {
         binding.tvResult.text = "HASIL TELAH DIDAPAT"
-        binding.tvR1.text = "Status terkena diabetes :".plus(resultKlinis.prediction)
-        binding.tvR2.text = "Keakuratan hasil prediksi :".plus(resultKlinis.probabilty)
+        binding.tvR1.text = "- ".plus(resultKlinis.prediction)
+        binding.tvR2.text = "- ".plus(resultKlinis.probabilty)
         if (resultRetina.retinaDetected) {
-            binding.tvR3.text = "Level diabetic retinopathy :".plus(resultRetina.drClass)
+            if (resultRetina.drClass == "No DR") {
+                binding.tvR3.text = "- Diabetic Retinopathy tidak terdeteksi"
+            } else {
+                binding.tvR3.text = "- Level diabetic retinopathy :".plus(resultRetina.drClass)
+            }
         } else {
-            binding.tvR3.text = "Diabetic retinopathy tidak terdeteksi"
+            binding.tvR3.text = "- Gambar retina tidak terdeteksi"
+        }
+        Glide.with(binding.ivRetina.context).load(imgUrl).into(binding.ivRetina)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.loadImg.visibility = View.VISIBLE
+        } else {
+            binding.loadImg.visibility = View.GONE
         }
     }
 

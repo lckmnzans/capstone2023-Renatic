@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.renatic.app.data.Patients
 import com.renatic.app.data.adapter.PatientsAdapter
@@ -17,6 +18,7 @@ import com.renatic.app.manager.ToolbarManager
 import com.renatic.app.data.response.PatientItem
 import com.renatic.app.viewModel.MainViewModel
 import com.renatic.app.viewModel.ViewModelFactory
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -54,7 +56,9 @@ class MainActivity : AppCompatActivity() {
         })
 
         binding.rvPatients.layoutManager = LinearLayoutManager(this)
-        viewModel.getListOfPatient(this)
+        lifecycleScope.launch {
+            viewModel.getListOfPatient(this@MainActivity)
+        }
         viewModel.isLoading.observe(this) { showLoading(it) }
         viewModel.patientList.observe(this) { listOfPatients ->
             setPatientsData(listOfPatients)
@@ -73,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getListOfPatient(this)
+        lifecycleScope.launch { viewModel.getListOfPatient(this@MainActivity) }
     }
 
     private fun setPatientsData(patients: List<PatientItem>?) {

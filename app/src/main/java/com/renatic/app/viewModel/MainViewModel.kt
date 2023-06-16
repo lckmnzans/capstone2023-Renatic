@@ -3,6 +3,8 @@ package com.renatic.app.viewModel
 import android.content.Context
 import android.util.Log
 import androidx.collection.LruCache
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,19 +30,15 @@ class MainViewModel(context: Context): ViewModel() {
 
     val listPatientStack = Stack<List<PatientItem>>()
 
-    fun getListOfPatient(context: Context) {
+    suspend fun getListOfPatient(context: Context) {
         _isLoading.value = true
         val token = context.getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
-        runBlocking {
-            launch {
-                val response = ApiConfig.getApiService(token.toString()).getAllPatient()
-                val listOfPatients = response.data
-                if (listOfPatients != null) {
-                    _isLoading.value = false
-                    _patientList.value = listOfPatients
-                    listPatientStack.push(listOfPatients)
-                }
-            }
+        val response = ApiConfig.getApiService(token.toString()).getAllPatient()
+        val listOfPatients = response.data
+        if (listOfPatients != null) {
+            _isLoading.value = false
+            _patientList.value = listOfPatients
+            listPatientStack.push(listOfPatients)
         }
     }
 

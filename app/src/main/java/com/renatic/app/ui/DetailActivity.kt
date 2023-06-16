@@ -66,6 +66,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.getDetailPatient(ID, this)
+        viewModel.getClinicalData(ID, this)
     }
 
     private fun setPatientDetail(detail: Patients) {

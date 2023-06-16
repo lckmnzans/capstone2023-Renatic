@@ -192,6 +192,7 @@ class FormClinicalActivity : AppCompatActivity() {
                             Log.d(TAG, "onResponse: ${response.message()}")
                         }
                         Toast.makeText(this@FormClinicalActivity, "Data berhasil diunggah", Toast.LENGTH_SHORT).show()
+                        finish()
                     }
 
                     override fun onFailure(call: Call<InputDataResponse>, t: Throwable) {

@@ -21,6 +21,9 @@
     <string name="take_pict">Ambil Gambar</string>
     <string name="status">Status pemeriksaan</string>
 
+    <string name="result_1">Status terkena diabetes :</string>
+    <string name="result_2">Keakuratan hasil prediksi :</string>
+
     <string name="age">Umur</string>
     <string name="ex_name">cth: Jokowi</string>
     <string name="num">No. BPJS/JKN</string>
