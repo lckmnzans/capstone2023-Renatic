@@ -4,13 +4,15 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.renatic.app.data.adapter.ClinicalAdapter
 import com.renatic.app.data.Patients
+import com.renatic.app.data.adapter.PatientsAdapter
 import com.renatic.app.databinding.ActivityDetailBinding
 import com.renatic.app.manager.Toolbar2Manager
-import com.renatic.app.data.response.ClinicalItem
+import com.renatic.app.data.response.DataItem
 import com.renatic.app.toPatients
 import com.renatic.app.viewModel.DetailViewModel
 import com.renatic.app.viewModel.ViewModelFactory
@@ -73,29 +75,25 @@ class DetailActivity : AppCompatActivity() {
         binding.tvNumDetail.text = ": ".plus(detail.num)
     }
 
-    private fun setPatientClinical(listClinical: List<ClinicalItem?>) {
+    private fun setPatientClinical(listClinical: List<DataItem?>) {
         if (listClinical.isNotEmpty()) {
-            val list = ArrayList<ClinicalItem>()
+            val list = ArrayList<DataItem>()
             for (clinicalItem in listClinical) {
                 if (clinicalItem != null) {
-                    val item = ClinicalItem(
-                        pregnancies = clinicalItem.pregnancies,
-                        idKlinis = clinicalItem.idKlinis,
-                        glucose = clinicalItem.glucose,
-                        insulin = clinicalItem.insulin,
-                        patient = clinicalItem.patient,
-                        skin = clinicalItem.skin,
-                        diabetesDegree = clinicalItem.diabetesDegree,
-                        tanggalLahir = clinicalItem?.tanggalLahir ?: "",
-                        blood = clinicalItem.blood,
-                        bmi = clinicalItem.bmi
-                    )
-                    list.add(item)
+                    list.add(clinicalItem)
                 }
             }
 
             val listClinical = ClinicalAdapter(list)
             binding.rvHistoris.adapter = listClinical
+
+            listClinical.setOnItemClickListener(object: ClinicalAdapter.OnItemClickListener {
+                override fun onItemClicked(id: String) {
+                    val intent = Intent(this@DetailActivity, ResultActivity::class.java)
+                    intent.putExtra(ResultActivity.EXTRA_ID, id)
+                    startActivity(intent)
+                }
+            })
         }
     }
 

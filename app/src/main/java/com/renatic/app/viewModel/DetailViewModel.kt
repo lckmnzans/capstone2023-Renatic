@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.renatic.app.api.ApiConfig
-import com.renatic.app.data.response.ClinicalItem
-import com.renatic.app.data.response.ClinicalResponse
+import com.renatic.app.data.response.DataItem
+import com.renatic.app.data.response.ListScreeningResponse
 import com.renatic.app.data.response.PatientItem
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -20,8 +20,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DetailViewModel(context: Context): ViewModel() {
-    private val _clinicalData = MutableLiveData<List<ClinicalItem?>>()
-    val clinicalData: LiveData<List<ClinicalItem?>> = _clinicalData
+    private val _clinicalData = MutableLiveData<List<DataItem?>>()
+    val clinicalData: LiveData<List<DataItem?>> = _clinicalData
 
     private val _detailPatient = MutableLiveData<PatientItem>()
     val detailPatient: LiveData<PatientItem> = _detailPatient
@@ -41,11 +41,11 @@ class DetailViewModel(context: Context): ViewModel() {
     fun getClinicalData(id: String, context: Context) {
         val token = context.getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token","")
         viewModelScope.launch {
-            val client = ApiConfig.getApiService(token.toString()).getClinical(id)
-            client.enqueue(object: Callback<ClinicalResponse> {
+            val client = ApiConfig.getApiService(token.toString()).getSkrinningPatient(id)
+            client.enqueue(object: Callback<ListScreeningResponse> {
                 override fun onResponse(
-                    call: Call<ClinicalResponse>,
-                    response: Response<ClinicalResponse>,
+                    call: Call<ListScreeningResponse>,
+                    response: Response<ListScreeningResponse>,
                 ) {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
@@ -58,7 +58,7 @@ class DetailViewModel(context: Context): ViewModel() {
                     }
                 }
 
-                override fun onFailure(call: Call<ClinicalResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ListScreeningResponse>, t: Throwable) {
                     Log.d(TAG, "onFailure: ${t.message}")
                 }
             })

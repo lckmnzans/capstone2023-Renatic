@@ -1,9 +1,6 @@
 package com.renatic.app.api
 
-import com.renatic.app.data.request.ClinicalRequest
-import com.renatic.app.data.request.LoginRequest
-import com.renatic.app.data.request.PatientRequest
-import com.renatic.app.data.request.RegisterRequest
+import com.renatic.app.data.request.*
 import com.renatic.app.data.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -51,22 +48,15 @@ interface ApiService {
         @Body patientRequest: PatientRequest
     ): Call<RegisterResponse>
 
-    @POST("addklinis")
-    fun addClinical(
-        @Header("id") id: Int,
-        @Body clinicalRequest: ClinicalRequest
-    ): Call<RegisterResponse>
+    @GET("skriningpasien/{id}")
+    fun getSkrinningPatient(
+        @Path("id") id: String
+    ): Call<ListScreeningResponse>
 
-    @GET("dataKlinis/{id}")
-    fun getClinical(
+    @GET("skrining/{id}")
+    fun getScreening(
         @Path("id") id: String
     ): Call<ClinicalResponse>
-
-    @Multipart
-    @POST("upload")
-    fun addImage(
-        @Part file: MultipartBody.Part
-    ): Call<UploadResponse>
 
     @Multipart
     @POST("tesklinis")
@@ -81,4 +71,9 @@ interface ApiService {
         @Part("BMI") bmi: RequestBody,
         @Part("DiabetesPedigreeFunction") diabetesPedigreeFunction: RequestBody
     ): Call<InputDataResponse>
+
+    @POST("scanml")
+    suspend fun screeningTest(
+        @Body screeningRequest: ScreeningRequest
+    ): ScreeningResponse
 }

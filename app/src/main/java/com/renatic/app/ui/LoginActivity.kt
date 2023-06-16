@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
             override fun afterTextChanged(t: Editable?) {
                 //
             }
-        } )
+        })
 
         binding.btnLogin.setOnClickListener {
             val email = binding.edtEmail.text

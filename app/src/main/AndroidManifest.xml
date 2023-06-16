@@ -20,9 +20,6 @@
         android:theme="@style/Theme.Renatic"
         tools:targetApi="31">
         <activity
-            android:name=".ResultActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.SplashActivity"
             android:exported="true"
             android:noHistory="true">
@@ -32,6 +29,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.ScreeningActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ResultActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.FormPatientActivity"
             android:exported="false" />

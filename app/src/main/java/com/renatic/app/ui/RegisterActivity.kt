@@ -3,6 +3,8 @@ package com.renatic.app.ui
 import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,6 +22,40 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.edtPassword1.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(t: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //
+            }
+
+            override fun onTextChanged(t: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val password = binding.edtPassword1.text
+                if (password.length < 8) {
+                    binding.edtPassword1.error = "Password harus minimal 8 karakter"
+                }
+            }
+
+            override fun afterTextChanged(t: Editable?) {
+                //
+            }
+        })
+
+        binding.edtPassword2.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(t: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //
+            }
+
+            override fun onTextChanged(t: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val password = binding.edtPassword2.text
+                if (password.length < 8) {
+                    binding.edtPassword2.error = "Password harus minimal 8 karakter"
+                }
+            }
+
+            override fun afterTextChanged(t: Editable?) {
+                //
+            }
+        })
 
         binding.btnRegister.setOnClickListener {
             val name = binding.edtNama.text.toString()

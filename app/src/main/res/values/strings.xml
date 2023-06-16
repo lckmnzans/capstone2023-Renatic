@@ -15,6 +15,7 @@
     <string name="form_patient">Form Data Pasien</string>
     <string name="form_clinical">Form Data Klinis</string>
     <string name="result">Hasil Skrining</string>
+    <string name="onprogress">SEDANG DIPROSES</string>
     <string name="upload">Unggah Gambar</string>
     <string name="submit">Submit</string>
     <string name="take_pict">Ambil Gambar</string>
