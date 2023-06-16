@@ -16,17 +16,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
+import com.renatic.app.*
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.data.Patients
 import com.renatic.app.databinding.ActivityFormClinicalBinding
 import com.renatic.app.manager.Toolbar2Manager
-import com.renatic.app.reduceFileImage
-import com.renatic.app.resizeBitmap
-import com.renatic.app.response.ClinicalRequest
-import com.renatic.app.response.RegisterResponse
-import com.renatic.app.response.UploadResponse
-import com.renatic.app.uriToBitmap
-import com.renatic.app.uriToFile
+import com.renatic.app.data.request.ClinicalRequest
+import com.renatic.app.data.response.RegisterResponse
+import com.renatic.app.data.response.UploadResponse
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -39,7 +36,6 @@ class FormClinicalActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFormClinicalBinding
     private lateinit var toolbar: Toolbar2Manager
     private var getFile: File? = null
-    private var getData: List<String> = ArrayList()
     private var isUploaded = MutableLiveData<Boolean>()
 
     private val launcherIntentCameraX = registerForActivityResult(
@@ -133,13 +129,9 @@ class FormClinicalActivity : AppCompatActivity() {
         }
 
         binding.btnSubmit.setOnClickListener {
-            getInputData()
-            if (getFile != null && getData.all { it.isNotBlank() }) {
-                uploadDataClinical()
-                uploadDataImage()
-            } else {
-                Toast.makeText(this@FormClinicalActivity, "Silahkan lengkapi data-data terlebih dahulu", Toast.LENGTH_SHORT).show()
-            }
+            val data = getInputData()
+            uploadDataClinical(data)
+            //uploadDataImage()
         }
     }
 
@@ -152,20 +144,21 @@ class FormClinicalActivity : AppCompatActivity() {
         launcherIntentCameraX.launch(intent)
     }
 
-    private fun getInputData() {
-        val pregnancies = binding.etPregnancies.text.toString()
-        val glucose = binding.etGlucose.text.toString()
-        val bpressure = binding.etBpressure.text.toString()
-        val sthickness = binding.etSthickness.text.toString()
-        val insulin = binding.etInsulin.text.toString()
-        val bmi = binding.etBmi.text.toString()
-        val diabetes = binding.etDiabetes.text.toString()
-        getData = listOf(pregnancies, glucose, bpressure, sthickness, insulin, bmi, diabetes)
+    private fun getInputData(): List<Double> {
+        val pregnancies = binding.etPregnancies.text.toString().toDoubleOrZero()
+        val glucose = binding.etGlucose.text.toString().toDoubleOrZero()
+        val bpressure = binding.etBpressure.text.toString().toDoubleOrZero()
+        val sthickness = binding.etSthickness.text.toString().toDoubleOrZero()
+        val insulin = binding.etInsulin.text.toString().toDoubleOrZero()
+        val bmi = binding.etBmi.text.toString().toDoubleOrZero()
+        val diabetes = binding.etDiabetes.text.toString().toDoubleOrZero()
+
+        return listOf(pregnancies, glucose, bpressure, sthickness, insulin, bmi, diabetes)
     }
 
-    private fun uploadDataClinical() {
-        if (getData.all { it.isNotBlank() }) {
-            val data = ClinicalRequest(getData[0], getData[1], getData[2], getData[3], getData[4], getData[5], getData[6])
+    private fun uploadDataClinical(data: List<Double>) {
+        if (!data.contains(0.0)) {
+            val data = ClinicalRequest(data[0], data[1], data[2], data[3], data[4], data[5], data[6])
             val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
             val id = getParceableData()?.id ?: 0
             if (id != 0) {
@@ -178,22 +171,19 @@ class FormClinicalActivity : AppCompatActivity() {
                     ) {
                         if (response.isSuccessful) {
                             val responseBody = response.body()
-                            if ((responseBody != null) && !responseBody.error.toBooleanStrict()) {
-                                isUploaded.value = true
-                                Log.d(TAG, "onResponse : ${responseBody.message}")
-                            }
+                            Log.d(TAG, "onResponse: ${responseBody!!.message}")
                         } else {
-                            Log.d(TAG, "onResponse : ${response.message()}")
+                            Log.d(TAG, "onResponse: ${response.message()}")
                         }
                     }
 
                     override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                        Log.d(TAG, "onFailure : ${t.message}")
+                        Log.d(TAG, "onFailure: ${t.message}")
                     }
                 })
             }
         } else {
-            Toast.makeText(this@FormClinicalActivity, "Mohon isi seluruh form input terlebih dahulu", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FormClinicalActivity, "Silahkan lengkapi data-data terlebih dahulu", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -207,7 +197,6 @@ class FormClinicalActivity : AppCompatActivity() {
                 requestImageFile
             )
             val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
-            showLoading(true)
             isUploaded.value = false
             val client = ApiConfig.getApiService(token.toString()).addImage(imageMultipart)
             client.enqueue(object: Callback<UploadResponse>{
@@ -215,23 +204,23 @@ class FormClinicalActivity : AppCompatActivity() {
                     call: Call<UploadResponse>,
                     response: Response<UploadResponse>,
                 ) {
-                    showLoading(false)
                     if (response.isSuccessful) {
                         val responseBody = response.body()
                         if ((responseBody != null) && !responseBody.error.toBooleanStrict()) {
-                            Toast.makeText(this@FormClinicalActivity, responseBody.message, Toast.LENGTH_SHORT).show()
-                            finish()
+
                         }
+                        Log.d(TAG, "onResponse: ${responseBody!!.message}")
                     } else {
-                        Toast.makeText(this@FormClinicalActivity, response.message(), Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "onResponse: ${response.message()}")
                     }
                 }
 
                 override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
-                    showLoading(false)
-                    Toast.makeText(this@FormClinicalActivity, "Ada kegagalan dalam upload", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "onFailure: ${t.message}")
                 }
             })
+        } else {
+            Toast.makeText(this@FormClinicalActivity, "Silahkan lengkapi data-data terlebih dahulu", Toast.LENGTH_SHORT).show()
         }
     }
 

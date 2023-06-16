@@ -14,8 +14,8 @@ import com.renatic.app.api.ApiConfig
 import com.renatic.app.data.Patients
 import com.renatic.app.databinding.ActivityFormPatientBinding
 import com.renatic.app.manager.Toolbar2Manager
-import com.renatic.app.response.PatientRequest
-import com.renatic.app.response.RegisterResponse
+import com.renatic.app.data.request.PatientRequest
+import com.renatic.app.data.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -100,19 +100,18 @@ class FormPatientActivity : AppCompatActivity() {
                 response: Response<RegisterResponse>,
             ) {
                 if (response.isSuccessful) {
-                    val responseBody = response.body()!!
-                    val error = responseBody.error.toBooleanStrict()
-                    val message = responseBody.message
-                    if (error) {
-                        Log.d(TAG, message)
-                    } else {
-                        Log.d(TAG, message)
+                    val responseBody = response.body()
+                    if ((responseBody != null) && !responseBody.error.toBooleanStrict()) {
+                        Log.d(TAG, responseBody.message)
+
                     }
+                } else {
+                    Log.d(TAG, response.message())
                 }
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d(TAG, t.message.toString())
             }
         })
     }
@@ -127,14 +126,13 @@ class FormPatientActivity : AppCompatActivity() {
                 response: Response<RegisterResponse>,
             ) {
                 if (response.isSuccessful) {
-                    val responseBody = response.body()!!
-                    val error = responseBody.error.toBooleanStrict()
-                    val message = responseBody.message
-                    if (error) {
-                        Log.d(TAG, message)
-                    } else {
-                        Log.d(TAG, message)
+                    val responseBody = response.body()
+                    if ((responseBody != null) && !responseBody.error.toBooleanStrict()) {
+                        Log.d(TAG, responseBody.message)
+
                     }
+                } else {
+                    Log.d(TAG, response.message())
                 }
             }
 

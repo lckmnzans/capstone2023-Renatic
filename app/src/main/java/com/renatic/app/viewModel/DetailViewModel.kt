@@ -7,13 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.renatic.app.api.ApiConfig
-import com.renatic.app.response.ClinicalItem
-import com.renatic.app.response.ClinicalResponse
-import com.renatic.app.response.PatientItem
-import kotlinx.coroutines.Dispatchers
+import com.renatic.app.data.response.ClinicalItem
+import com.renatic.app.data.response.ClinicalResponse
+import com.renatic.app.data.response.PatientItem
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Period
 import org.threeten.bp.format.DateTimeFormatter

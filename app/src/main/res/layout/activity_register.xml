@@ -83,7 +83,7 @@
             android:layout_height="45dp"
             android:layout_marginBottom="40dp"
             android:background="@drawable/custom_frame"
-            android:hint="@string/conf_password"
+            android:hint="@string/password2"
             android:inputType="textPassword"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"

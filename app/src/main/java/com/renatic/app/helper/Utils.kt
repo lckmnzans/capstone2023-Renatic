@@ -9,7 +9,7 @@ import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
 import com.renatic.app.data.Patients
-import com.renatic.app.response.PatientItem
+import com.renatic.app.data.response.PatientItem
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -114,4 +114,20 @@ fun Patients.toPatientItem(): PatientItem {
         idPatient = id ?: 0,
         tanggalLahir = dob
     )
+}
+
+fun String.toDoubleOrZero(): Double {
+    return try {
+        this.toDouble()
+    } catch (e: NumberFormatException) {
+        0.0
+    }
+}
+
+fun Double.isNotZero(): Boolean {
+    return this != 0.0
+}
+
+fun Double.isZero(): Boolean {
+    return this == 0.0
 }

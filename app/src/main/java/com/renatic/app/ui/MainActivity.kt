@@ -9,13 +9,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.renatic.app.data.Patients
-import com.renatic.app.data.PatientsAdapter
+import com.renatic.app.data.adapter.PatientsAdapter
 import com.renatic.app.databinding.ActivityMainBinding
 import com.renatic.app.manager.ToolbarManager
-import com.renatic.app.response.PatientItem
+import com.renatic.app.data.response.PatientItem
 import com.renatic.app.viewModel.MainViewModel
 import com.renatic.app.viewModel.ViewModelFactory
 

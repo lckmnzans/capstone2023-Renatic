@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.renatic.app.api.ApiConfig
-import com.renatic.app.response.RegisterRequest
-import com.renatic.app.response.RegisterResponse
+import com.renatic.app.data.request.RegisterRequest
+import com.renatic.app.data.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

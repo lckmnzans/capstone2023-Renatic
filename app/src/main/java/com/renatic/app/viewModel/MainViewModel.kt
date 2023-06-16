@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.helper.Stack
-import com.renatic.app.response.PatientItem
-import com.renatic.app.response.PatientResponse
+import com.renatic.app.data.response.PatientItem
+import com.renatic.app.data.response.PatientResponse
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaType

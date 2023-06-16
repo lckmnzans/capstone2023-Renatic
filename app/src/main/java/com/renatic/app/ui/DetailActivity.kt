@@ -6,12 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.renatic.app.data.ClinicalAdapter
+import com.renatic.app.data.adapter.ClinicalAdapter
 import com.renatic.app.data.Patients
 import com.renatic.app.databinding.ActivityDetailBinding
 import com.renatic.app.manager.Toolbar2Manager
-import com.renatic.app.response.ClinicalItem
-import com.renatic.app.response.PatientItem
+import com.renatic.app.data.response.ClinicalItem
 import com.renatic.app.toPatients
 import com.renatic.app.viewModel.DetailViewModel
 import com.renatic.app.viewModel.ViewModelFactory
@@ -111,6 +110,7 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_DETAIL = "extra_detail"
+
         private var ID = "0"
     }
 }

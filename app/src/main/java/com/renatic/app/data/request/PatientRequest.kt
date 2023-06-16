@@ -1,4 +1,4 @@
-package com.renatic.app.response
+package com.renatic.app.data.request
 
 data class PatientRequest(
     val name: String,

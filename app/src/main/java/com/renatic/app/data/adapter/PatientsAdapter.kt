@@ -1,8 +1,9 @@
-package com.renatic.app.data
+package com.renatic.app.data.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.renatic.app.data.Patients
 import com.renatic.app.databinding.ItemViewBinding
 
 class PatientsAdapter(private val listPatients: ArrayList<Patients>): RecyclerView.Adapter<PatientsAdapter.ViewHolder>() {

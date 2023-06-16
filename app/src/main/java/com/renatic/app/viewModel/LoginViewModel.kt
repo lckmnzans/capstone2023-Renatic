@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.manager.SessionManager
-import com.renatic.app.response.LoginRequest
-import com.renatic.app.response.LoginResponse
+import com.renatic.app.data.request.LoginRequest
+import com.renatic.app.data.response.LoginResponse
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call

@@ -1,6 +1,10 @@
 package com.renatic.app.api
 
-import com.renatic.app.response.*
+import com.renatic.app.data.request.ClinicalRequest
+import com.renatic.app.data.request.LoginRequest
+import com.renatic.app.data.request.PatientRequest
+import com.renatic.app.data.request.RegisterRequest
+import com.renatic.app.data.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call

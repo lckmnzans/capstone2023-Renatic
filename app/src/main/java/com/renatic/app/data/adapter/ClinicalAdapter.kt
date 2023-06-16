@@ -1,10 +1,10 @@
-package com.renatic.app.data
+package com.renatic.app.data.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.renatic.app.databinding.ItemViewBinding
-import com.renatic.app.response.ClinicalItem
+import com.renatic.app.data.response.ClinicalItem
 
 class ClinicalAdapter(private val listClinical: ArrayList<ClinicalItem>): RecyclerView.Adapter<ClinicalAdapter.ViewHolder>() {
     class ViewHolder(private val binding: ItemViewBinding): RecyclerView.ViewHolder(binding.root) {

@@ -1,4 +1,4 @@
-package com.renatic.app.response
+package com.renatic.app.data.response
 
 import com.google.gson.annotations.SerializedName
 
