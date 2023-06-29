@@ -3,7 +3,7 @@
 
   <h1>👁️ Renatic APP 👁️</h1>
   
-  This repo is a personal repository containing the Android project files used to build the eye-detecting diabetes App as a final project in Bangkit Academy 2023.
+  This repo is a personal repository containing the Android project files used to build the eye-detecting diabetes App \n as a final project in Bangkit Academy 2023.
   If you want to know more about this project, you can open this [link](https://github.com/Renatic-C23-PR504)
 
   ## Screenshot
