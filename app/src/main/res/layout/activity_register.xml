@@ -89,11 +89,11 @@
             android:paddingEnd="20dp"
             android:textSize="16sp"
             tools:ignore="Autofill" />
-        <Button
+        <com.google.android.material.button.MaterialButton
+            app:cornerRadius="15dp"
             android:id="@+id/btn_register"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:background="@drawable/custom_frame"
             android:text="@string/register" />
 
     </LinearLayout>

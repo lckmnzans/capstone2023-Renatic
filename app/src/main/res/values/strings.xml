@@ -43,6 +43,8 @@
     <string name="bmi">BMI</string>
     <string name="diabet">DiabetesperDegree</string>
     <string name="bla">...</string>
+    <string name="register_tip">Belum punya akun? register</string>
+    <string name="register_to">di sini</string>
 
     <string name="selected_item">dipilih</string>
     <string-array name="sexes">
