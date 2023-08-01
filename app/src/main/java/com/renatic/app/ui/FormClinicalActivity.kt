@@ -11,11 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.renatic.app.*
 import com.renatic.app.api.ApiConfig
 import com.renatic.app.data.Patients
@@ -34,6 +37,7 @@ import java.io.File
 class FormClinicalActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFormClinicalBinding
     private lateinit var toolbar: Toolbar2Manager
+    private lateinit var bottomSheet: BottomSheetDialog
     private var getFile: File? = null
 
     private val launcherIntentCameraX = registerForActivityResult(
@@ -100,24 +104,25 @@ class FormClinicalActivity : AppCompatActivity() {
         toolbar = Toolbar2Manager(this)
         toolbar.setupToolbar()
 
-        binding.btnTakePic.setOnClickListener {
-            if (!allPermissionsGranted()) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    REQUIRED_PERMISSIONS,
-                    REQUEST_CODE_PERMISSIONS
-                )
-            } else {
-                startCameraX()
-            }
-        }
+        //New addition
+        bottomSheet = BottomSheetDialog(this)
+        binding.ivAddPhoto.setOnClickListener {
+            val view = layoutInflater.inflate(R.layout.bottom_sheet, binding.root, false)
+            val btnFromCamera = view.findViewById<Button>(R.id.btn_from_camera)
+            val btnFromGallery = view.findViewById<Button>(R.id.btn_from_gallery)
 
-        binding.btnUploPic.setOnClickListener {
-            val intent = Intent()
-            intent.action = Intent.ACTION_GET_CONTENT
-            intent.type = "image/*"
-            val choser = Intent.createChooser(intent, "Pilih gambar dari galeri")
-            launcherIntentGallery.launch(choser)
+            bottomSheet.setCancelable(true)
+            bottomSheet.setContentView(view)
+            bottomSheet.show()
+
+            btnFromCamera.setOnClickListener {
+                getPicture(1)
+                bottomSheet.dismiss()
+            }
+            btnFromGallery.setOnClickListener {
+                getPicture(2)
+                bottomSheet.dismiss()
+            }
         }
 
         binding.btnSubmit.setOnClickListener {
@@ -222,6 +227,26 @@ class FormClinicalActivity : AppCompatActivity() {
             intent.getParcelableExtra(DetailActivity.EXTRA_DETAIL, Patients::class.java)
         } else {
             intent.getParcelableExtra(DetailActivity.EXTRA_DETAIL)
+        }
+    }
+
+    private fun getPicture(btnId: Int) {
+        if (btnId == 1) {
+            if (!allPermissionsGranted()) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    REQUIRED_PERMISSIONS,
+                    REQUEST_CODE_PERMISSIONS
+                )
+            } else {
+                startCameraX()
+            }
+        } else if (btnId == 2) {
+            val intent = Intent()
+            intent.action = Intent.ACTION_GET_CONTENT
+            intent.type = "image/*"
+            val choser = Intent.createChooser(intent, "Pilih gambar dari galeri")
+            launcherIntentGallery.launch(choser)
         }
     }
 

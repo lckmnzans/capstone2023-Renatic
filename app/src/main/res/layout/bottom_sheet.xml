@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/bottom_handle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="140dp"
+            android:layout_marginEnd="140dp"
+            app:dividerColor="@android:color/darker_gray"
+            app:dividerThickness="2dp"/>
+        <TextView
+            android:id="@+id/tv_bottom_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Pilih Metode Pengambilan Gambar"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_below="@id/bottom_handle"/>
+        <LinearLayout
+            android:id="@+id/btn_selection"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/tv_bottom_title">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_from_camera"
+                app:cornerRadius="20dp"
+                android:text="@string/from_camera"
+                android:layout_marginEnd="10dp"
+                android:layout_width="100dp"
+                android:layout_height="60dp"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_from_gallery"
+                app:cornerRadius="20dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/from_gallery"
+                android:layout_width="100dp"
+                android:layout_height="60dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_selection"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

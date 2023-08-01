@@ -50,7 +50,7 @@ class LoginViewModel(context: Context): ViewModel() {
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 _isLoading.value = false
-                Toast.makeText(context, "Login gagal karena koneksi jaringan", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Login gagal", Toast.LENGTH_SHORT).show()
                 Log.e(TAG, "onFailure : ${t.message}")
             }
         })
