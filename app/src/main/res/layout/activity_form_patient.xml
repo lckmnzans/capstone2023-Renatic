@@ -10,13 +10,13 @@
         android:id="@+id/toolbar2"
         layout="@layout/toolbar2"/>
 
-    <ImageView
+    <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:contentDescription="@string/noname"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:src="@drawable/custom_line"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:dividerColor="@android:color/darker_gray"
+        app:dividerThickness="2dp"
         app:layout_constraintTop_toBottomOf="@id/toolbar2" />
 
     <ScrollView
@@ -54,13 +54,14 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/custom_frame"
                 android:orientation="vertical"
+                android:gravity="center_horizontal"
                 android:padding="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_act_title">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:gravity="start"
@@ -83,7 +84,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:gravity="start"
@@ -106,7 +107,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:gravity="start"
@@ -129,7 +130,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:gravity="start"
@@ -149,7 +150,7 @@
                     android:paddingBottom="13dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:gravity="start"
@@ -171,12 +172,14 @@
                     android:paddingBottom="13dp"
                     android:textSize="16sp" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_submit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="160dp"
+                    android:layout_height="60dp"
                     android:layout_marginTop="10dp"
-                    android:text="@string/submit" />
+                    android:text="@string/submit"
+                    android:textColor="?attr/colorOnSecondary"
+                    app:cornerRadius="20dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

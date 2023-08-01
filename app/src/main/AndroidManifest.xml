@@ -30,9 +30,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.ScreeningActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.ResultActivity"
             android:exported="false" />
         <activity

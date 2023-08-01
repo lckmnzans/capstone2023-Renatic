@@ -94,6 +94,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:text="@string/register"
+            android:textColor="?attr/colorOnSecondary"
             app:cornerRadius="20dp" />
 
     </LinearLayout>
