@@ -30,6 +30,9 @@ class MainViewModel(context: Context): ViewModel() {
 
     val listPatientStack = Stack<List<PatientItem>>()
 
+    private val _internetAvailable = MutableLiveData<Boolean>()
+    val internetAvailable: LiveData<Boolean> = _internetAvailable
+
     suspend fun getListOfPatient(context: Context) {
         _isLoading.value = true
         val token = context.getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")

@@ -42,7 +42,7 @@
     <string name="insulin">Insulin</string>
     <string name="bmi">BMI</string>
     <string name="diabet">DiabetesperDegree</string>
-    <string name="bla">...</string>
+    <string name="empty_text">…</string>
     <string name="register_tip">Belum punya akun? register</string>
     <string name="register_to">di sini</string>
 

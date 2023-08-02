@@ -69,6 +69,8 @@ class MainActivity : AppCompatActivity() {
                 if (!viewModel.listPatientStack.isEmpty()) {
                     val previousResponse = viewModel.listPatientStack.pop()
                     setPatientsData(previousResponse)
+                } else {
+                    finishAffinity()
                 }
             }
         }

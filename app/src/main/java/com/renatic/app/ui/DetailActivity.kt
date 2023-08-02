@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,7 +47,12 @@ class DetailActivity : AppCompatActivity() {
         binding.rvHistoris.layoutManager = LinearLayoutManager(this)
         viewModel.getClinicalData(ID, this)
         viewModel.clinicalData.observe(this) {
-            setPatientClinical(it)
+            if (it.isNotEmpty()) {
+                setPatientClinical(it)
+            } else {
+                binding.rvHistoris.visibility = View.INVISIBLE
+                binding.tvIfempty.visibility = View.VISIBLE
+            }
         }
 
         binding.btnToForm.setOnClickListener {
