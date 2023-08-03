@@ -23,48 +23,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.edtPassword.addTextChangedListener(object: TextWatcher{
-            override fun beforeTextChanged(t: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                //
-            }
-
-            override fun onTextChanged(t: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val password = binding.edtPassword.text
-                if (password.length < 8) {
-                    binding.edtPassword.error = "Password harus minimal 8 karakter"
-                }
-            }
-
-            override fun afterTextChanged(t: Editable?) {
-                //
-            }
-        })
-
-        binding.btnLogin.setOnClickListener {
-            val email = binding.edtEmail.text
-            val password = binding.edtPassword.text
-            if (!email.isNullOrEmpty() && !password.isNullOrEmpty()) {
-                viewModel.loginUser(email.toString(), password.toString(), this)
-                viewModel.isLoading.observe(this) { isLoading ->
-                    showLoading(isLoading)
-                }
-                viewModel.isSuccess.observe(this) { isSuccess ->
-                    if (isSuccess) toMain()
-                }
-            } else {
-                if (email.isNullOrEmpty()) {
-                    binding.edtEmail.error = "Email harap diisi"
-                }
-                if (password.isNullOrEmpty()) {
-                    binding.edtPassword.error = "Password harap diisi"
-                }
-            }
-        }
-
-        binding.btnRegister.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
+        setInputField()
+        setButton()
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -81,5 +41,84 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun setInputField() {
+        binding.edtEmail.addTextChangedListener(object: TextWatcher{
+            val email = binding.edtEmail.text
+            override fun beforeTextChanged(t: CharSequence?, start: Int, count: Int, after: Int) {
+                //
+            }
+
+            override fun onTextChanged(t: CharSequence?, start: Int, before: Int, count: Int) {
+                if (email.isNullOrEmpty()) {
+                    binding.tvAlertEmail.text = "Email harap diisi"
+                    binding.tvAlertEmail.visibility = View.VISIBLE
+                } else {
+                    binding.tvAlertEmail.visibility = View.INVISIBLE
+                }
+            }
+
+            override fun afterTextChanged(t: Editable?) {
+                //
+            }
+        })
+
+        binding.edtPassword.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(t: CharSequence?, start: Int, count: Int, after: Int) {
+                //
+            }
+
+            override fun onTextChanged(t: CharSequence?, start: Int, before: Int, count: Int) {
+                val password = binding.edtPassword.text
+                if (password.isBlank()) {
+                    binding.tvAlertPassword.text = "Password harap diisi"
+                    binding.tvAlertPassword.visibility = View.VISIBLE
+                } else if (password.length < 8) {
+                    binding.tvAlertPassword.text = "Password harus minimal 8 karakter"
+                    binding.tvAlertPassword.visibility = View.VISIBLE
+                } else {
+                    binding.tvAlertPassword.visibility = View.INVISIBLE
+                }
+            }
+
+            override fun afterTextChanged(t: Editable?) {
+                //
+            }
+        })
+    }
+
+    private fun setButton() {
+        binding.btnLogin.setOnClickListener {
+            val email = binding.edtEmail.text
+            val password = binding.edtPassword.text
+            if (!email.isNullOrEmpty() && !password.isNullOrEmpty()) {
+                viewModel.loginUser(email.toString(), password.toString(), this)
+                viewModel.isLoading.observe(this) { isLoading ->
+                    showLoading(isLoading)
+                }
+                viewModel.isSuccess.observe(this) { isSuccess ->
+                    if (isSuccess) toMain()
+                }
+            } else {
+                if (password.isNullOrEmpty()) {
+                    binding.tvAlertPassword.text = "Password harap diisi"
+                    binding.tvAlertPassword.visibility = View.VISIBLE
+                } else {
+                    binding.tvAlertPassword.visibility = View.INVISIBLE
+                }
+                if (email.isNullOrEmpty()) {
+                    binding.tvAlertEmail.text = "Email harap diisi"
+                    binding.tvAlertEmail.visibility = View.VISIBLE
+                } else {
+                    binding.tvAlertEmail.visibility = View.INVISIBLE
+                }
+            }
+        }
+
+        binding.btnRegister.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
