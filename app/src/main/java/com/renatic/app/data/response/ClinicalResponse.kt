@@ -20,7 +20,7 @@ data class ClinicalItem(
 	val pregnancies: Int,
 
 	@field:SerializedName("glucose")
-	val glucose: Int,
+	val glucose: Double,
 
 	@field:SerializedName("probabilty")
 	val probabilty: Any? = null,
@@ -29,22 +29,22 @@ data class ClinicalItem(
 	val idSkrining: Int,
 
 	@field:SerializedName("insulin")
-	val insulin: Int,
+	val insulin: Double,
 
 	@field:SerializedName("advice")
 	val advice: Any? = null,
 
 	@field:SerializedName("skin")
-	val skin: Int,
+	val skin: Double,
 
 	@field:SerializedName("diabetesDegree")
-	val diabetesDegree: Int,
+	val diabetesDegree: Double,
 
 	@field:SerializedName("retina_detected")
 	val retinaDetected: Any? = null,
 
 	@field:SerializedName("blood")
-	val blood: Int,
+	val blood: Double,
 
 	@field:SerializedName("gambar")
 	val gambar: String,
@@ -62,5 +62,5 @@ data class ClinicalItem(
 	val className: Any? = null,
 
 	@field:SerializedName("bmi")
-	val bmi: Int
+	val bmi: Double
 )

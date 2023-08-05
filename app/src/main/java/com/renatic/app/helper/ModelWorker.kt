@@ -12,12 +12,13 @@ class ModelWorker(ctx: Context, params: WorkerParameters): CoroutineWorker(ctx, 
     private val screeningData = ScreeningRequest(
         id = inputData.getString("id").toString(),
         Pregnancies = inputData.getInt("pregnancies", 0),
-        Glucose = inputData.getInt("glucose", 0),
-        BloodPressure = inputData.getInt("bloodPressure", 0),
-        SkinThickness = inputData.getInt("skinThickness", 0),
-        Insulin = inputData.getInt("insulin", 0),
-        BMI = inputData.getInt("bmi", 0),
-        DiabetesPedigreeFunction = inputData.getInt("glucose", 0),
+        Glucose = inputData.getDouble("glucose", 0.0),
+        BloodPressure = inputData.getDouble("bloodPressure", 0.0),
+        SkinThickness = inputData.getDouble("skinThickness", 0.0),
+        Insulin = inputData.getDouble("insulin", 0.0),
+        BMI = inputData.getDouble("bmi", 0.0),
+        DiabetesPedigreeFunction = inputData.getDouble("diabetesPedigree", 0.0),
+        Age = inputData.getDouble("age", 0.0),
         img = inputData.getString("img").toString()
     )
     val token = inputData.getString("token")

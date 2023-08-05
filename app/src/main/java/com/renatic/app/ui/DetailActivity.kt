@@ -24,6 +24,7 @@ class DetailActivity : AppCompatActivity() {
     private val viewModel: DetailViewModel by viewModels {
         ViewModelFactory(this)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -48,7 +49,7 @@ class DetailActivity : AppCompatActivity() {
         viewModel.getClinicalData(ID, this)
         viewModel.clinicalData.observe(this) {
             if (it.isNotEmpty()) {
-                setPatientClinical(it)
+                setPatientClinical(it, )
             } else {
                 binding.rvHistoris.visibility = View.INVISIBLE
                 binding.tvIfempty.visibility = View.VISIBLE
@@ -80,6 +81,7 @@ class DetailActivity : AppCompatActivity() {
         binding.tvDobDetail.text = ": ".plus(detail.dob)
         binding.tvSexDetail.text = ": ".plus(viewModel.getSex(detail.sex.toInt()))
         binding.tvNumDetail.text = ": ".plus(detail.num)
+        AGE = viewModel.getAge(detail.dob)
     }
 
     private fun setPatientClinical(listClinical: List<DataItem?>) {
@@ -98,6 +100,7 @@ class DetailActivity : AppCompatActivity() {
                 override fun onItemClicked(id: String) {
                     val intent = Intent(this@DetailActivity, ResultActivity::class.java)
                     intent.putExtra(ResultActivity.EXTRA_ID, id)
+                    intent.putExtra(ResultActivity.EXTRA_AGE, AGE)
                     startActivity(intent)
                 }
             })
@@ -117,5 +120,6 @@ class DetailActivity : AppCompatActivity() {
         const val EXTRA_DETAIL = "extra_detail"
 
         private var ID = "0"
+        private var AGE = 0
     }
 }

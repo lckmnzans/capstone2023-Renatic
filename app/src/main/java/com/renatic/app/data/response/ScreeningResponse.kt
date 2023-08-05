@@ -14,18 +14,6 @@ data class ScreeningResponse(
 	val message: String
 )
 
-data class FormKlinis(
-
-	@field:SerializedName("probabilty")
-	val probabilty: String,
-
-	@field:SerializedName("advice")
-	val advice: String,
-
-	@field:SerializedName("prediction")
-	val prediction: Boolean
-)
-
 data class ResultData(
 
 	@field:SerializedName("BloodPressure")
@@ -33,9 +21,6 @@ data class ResultData(
 
 	@field:SerializedName("DiabetesPedigreeFunction")
 	val diabetesPedigreeFunction: Int,
-
-	@field:SerializedName("imgKlinis")
-	val imgKlinis: ImgKlinis,
 
 	@field:SerializedName("Glucose")
 	val glucose: Int,
@@ -53,7 +38,22 @@ data class ResultData(
 	val bMI: Int,
 
 	@field:SerializedName("formKlinis")
-	val formKlinis: FormKlinis
+	val formKlinis: FormKlinis,
+
+	@field:SerializedName("imgKlinis")
+	val imgKlinis: ImgKlinis
+)
+
+data class FormKlinis(
+
+	@field:SerializedName("probabilty")
+	val probabilty: String,
+
+	@field:SerializedName("advice")
+	val advice: String,
+
+	@field:SerializedName("prediction")
+	val prediction: Boolean
 )
 
 data class ImgKlinis(

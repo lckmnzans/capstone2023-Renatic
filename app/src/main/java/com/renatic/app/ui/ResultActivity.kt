@@ -32,6 +32,8 @@ class ResultActivity : AppCompatActivity() {
         toolbar.setupToolbar()
 
         val id = intent.getStringExtra(EXTRA_ID).toString()
+        val age = intent.getIntExtra(EXTRA_AGE, 0)
+        AGE = age
         getScreening(id)
 
     }
@@ -59,9 +61,9 @@ class ResultActivity : AppCompatActivity() {
                             data.insulin,
                             data.bmi,
                             data.diabetesDegree,
+                            AGE.toDouble(),
                             data.gambar
                         )
-                        //getScreeningTest(request)
                         val workerData = workDataOf(
                             "id" to request.id,
                             "pregnancies" to request.Pregnancies,
@@ -70,6 +72,8 @@ class ResultActivity : AppCompatActivity() {
                             "skinThickness" to request.SkinThickness,
                             "insulin" to request.Insulin,
                             "bmi" to request.BMI,
+                            "diabetesPedigree" to request.DiabetesPedigreeFunction,
+                            "age" to request.Age,
                             "img" to request.img,
                             "token" to token
                         )
@@ -128,5 +132,7 @@ class ResultActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "ResultActivity"
         const val EXTRA_ID = "extra_id"
+        const val EXTRA_AGE = "extra_age"
+        var AGE = 0
     }
 }
